@@ -1,7 +1,27 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import Forecast from './Forecast'
 import './CurrentForecast.css'
+
+const CurrentForecastWrapper = styled.div`
+        width: 90%;
+    height: 200px;
+    margin:20px auto;
+    
+    color: rgba(255, 255, 255, 0.915);
+    border-top:1px solid rgba(255, 255, 255, 0.915);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.915); 
+`
+
+
+const H2Component = styled.h2` //etc
+    font-size: 1.225rem;
+`
+
+const MainTemp = styled.h3`
+font-size: 3rem;
+`
 
 const   CurrentForecast = ({ forecast, weather }) => {
   
@@ -10,15 +30,15 @@ const   CurrentForecast = ({ forecast, weather }) => {
     console.log(weather);
     return ( 
     <>
-    <div className="currentforecast">
+    <CurrentForecastWrapper>
         <h1>{weather.name}</h1>
-        <h2>{weather.weather[0].description}</h2>
-        <h3>{Math.floor(weather.main.temp)}<span>&#8451;</span></h3>
+        <H2Component>{weather.weather[0].description}</H2Component>
+        <MainTemp>{Math.floor(weather.main.temp)}<span>&#8451;</span></MainTemp>
             <div className="weather-icon">
                 {weather.weather.icon}
                 <img style={{width:'60px'}} src= {iconurl}alt='ok' />
             </div>
-    </div> 
+    </CurrentForecastWrapper>
     {forecast ?
     <Forecast
         forecast={forecast}
