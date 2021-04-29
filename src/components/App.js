@@ -20,7 +20,7 @@ class App extends Component {
           return response.json();
         }
         throw Error(":(")
-  
+
       })
       .then(data=>{
           const weather = data;
