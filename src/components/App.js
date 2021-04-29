@@ -3,43 +3,40 @@ import CurrentForecast from './CurrentForecast'
 import CurrentForecastInfo from './CurrentForecastInfo'
 import './App.css'
 
-
 class App extends Component {
   state = {
-   city:'',
-  weather:null,
-  forecast:null,
-  
-    }
+    city:'',
+    weather: null,
+    forecast: null,
+  }
 handleGetCity=(event)=>{
   event.preventDefault();
   const currentAPI =`http://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
   const forecastAPI =`http://api.openweathermap.org/data/2.5/forecast?q=${this.state.city}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
   fetch(currentAPI)
-  .then(response=>{
-    if(response.ok){
-      // console.log(response)
-      return response;
-    }
-    throw Error(":(")
-   
-  })
-  .then(response=>response.json())
-  
-  .then(data=>{
-      const weather = data;
-      this.setState({
-        weather,
-        city:''
-      })
-    })
-.catch(err=>{
-  
-  this.setState({
-    city: "",
+    .then(response=>{
+      if(response.ok){
+        // console.log(response)
+        return response;
+      }
+      throw Error(":(")
 
-  })
-})
+    })
+    .then(response=>response.json())
+
+    .then(data=>{
+        const weather = data;
+        this.setState({
+          weather,
+          city:''
+        })
+      })
+  .catch(err=>{
+    this.setState({
+      city: "",
+    })
+  });
+
   fetch(forecastAPI)
   .then(response=>{
     if(response.ok){
@@ -57,10 +54,8 @@ handleGetCity=(event)=>{
     })
   })
   .catch(err=>{
-  
     this.setState({
       city: "",
-     
     })
   })
   
