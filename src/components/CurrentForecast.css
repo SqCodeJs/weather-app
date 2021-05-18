@@ -1,0 +1,33 @@
+
+h1,h2,h3{
+    text-align: center;
+   
+    padding:5px 10px;
+    font-weight:normal
+}
+h1{
+    font-size: 34px;
+    }
+h2{ 
+    font-size: 16px;
+    
+}
+h2::first-letter{
+    text-transform: uppercase;
+
+}
+h3{
+    font-size: 20px;
+   
+}
+h3 span{font-size: 18px;
+   
+  
+}
+.weather-icon{
+   padding-bottom: 5px;
+   width: 100%;
+   height: 60px;
+  
+
+}
