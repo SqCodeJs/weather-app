@@ -11,11 +11,11 @@ const App = () => {
   const [carts, setCarts] = useState(0);
   const [currentCity, setCurrentCity] = useState("");
 
-  async function showCity(city) {
-    console.log("ShowCity", city);
-    const currentAPI = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
-    const forecastAPI = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
-
+  async function showCity(town) {
+    console.log("ShowCity");
+    const currentAPI = `http://api.openweathermap.org/data/2.5/weather?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
+    const forecastAPI = `http://api.openweathermap.org/data/2.5/forecast?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
+    //try/catch
     const weatherData = await getApi(currentAPI);
     const forecastData = await getApi(forecastAPI);
 
@@ -28,7 +28,7 @@ const App = () => {
       setCity("");
     } else {
       setCity("");
-      setError((prev) => !prev);
+      setError(true);
       console.log("weatherData: ", weatherData, "forecast: ", forecastData);
     }
   }
@@ -44,6 +44,7 @@ const App = () => {
   };
 
   const getPosition = useCallback(() => {
+    console.log("getPosition");
     const geoPosition = navigator.geolocation;
     if (geoPosition) {
       geoPosition.getCurrentPosition((location) => {
@@ -55,22 +56,26 @@ const App = () => {
         const asyncFunction = async () => {
           const data = await getApi(API);
           const cityName = data.address.city;
-          setCurrentCity(cityName);
-          setCity(cityName);
 
-          console.log("TUUU", city);
-          showCity(cityName);
+          setCurrentCity(cityName);
         };
 
         asyncFunction();
       });
     }
   }, []);
-
   useEffect(() => {
+    console.log("useEffect: getPosition");
     getPosition();
-  }, [getPosition]);
-
+  }, []);
+  useEffect(() => {
+    console.log("useefect: showCity");
+    if (currentCity) showCity(currentCity);
+  }, [currentCity]);
+  console.log(
+    "RENDER: Miasto: " + city + "!",
+    "Twoja pozycja: " + currentCity + "!"
+  );
   return (
     <React.Fragment>
       <Wrapper>
@@ -96,7 +101,7 @@ const Wrapper = styled.div`
 
   width: 100%;
   max-width: 1660px;
-  height: 200vh;
+  min-height: 100vh;
   background: linear-gradient(
     320deg,
     rgba(140, 98, 167, 1) 0%,

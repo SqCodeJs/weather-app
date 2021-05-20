@@ -5,8 +5,14 @@ import Forecast from "./Forecast";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const ForecastBoard = ({ weather, currentCity, error, handleCityRemove }) => {
-  console.log(weather);
+const ForecastBoard = ({
+  city,
+  weather,
+  currentCity,
+  error,
+  handleCityRemove,
+}) => {
+  // console.log(weather);
 
   const forecastBoard = weather.map((item, i) => (
     <ForecastBoardStyled weather={item} key={i}>
@@ -24,14 +30,17 @@ const ForecastBoardStyled = styled.div`
   width: 100%;
 `;
 const ButtonStyled = styled.button`
-  margin: 0 10px;
-  background-color: #fff;
-  border: 2px solid black;
-  font-size: 30px;
-  min-width: 50px;
-  height: 50px;
+  width: 5%;
+  height: 40px;
+
+  border: 2px solid white;
+  border-radius: 25px;
+  background-color: transparent;
+  opacity: ${(props) => (props.opacity === 4 ? "0.3" : "")};
   cursor: pointer;
-  outline: none;
+  padding: 0;
+  font-size: 20px;
+  line-height: 34px;
 `;
 ForecastBoard.propTypes = {
   weather: PropTypes.array,

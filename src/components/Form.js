@@ -13,6 +13,7 @@ const Form = ({ showCity, handleChange, city, carts }) => {
       />
       <ButtonStyled
         onClick={() => showCity(city)}
+        // onClick={showCity}
         opacity={carts}
         disabled={carts === 4 ? true : false}
       >
@@ -58,7 +59,7 @@ const ButtonStyled = styled.button`
   font-size: 20px;
   line-height: 34px;
 `;
-Form.protoTypes = {
+Form.propTypes = {
   showCity: PropTypes.func,
   getPosition: PropTypes.func,
   handleChange: PropTypes.func,

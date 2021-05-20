@@ -4,9 +4,11 @@ const getApi = (API) => {
       if (response.ok) {
         return response;
       }
+      // throw Error(response.statusText);
     })
     .then((response) => response.json())
     .catch((err) => {
+      return err;
       console.log(err);
     });
 };
