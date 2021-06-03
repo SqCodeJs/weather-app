@@ -98,11 +98,7 @@ const App = () => {
           const data = await getApi(API);
           const cityName = data.address.city;
           setCurrentCity(cityName);
-          const ke = "AIzaSyAE4vTmUlITrmh_ndTQBMBNFvSdxUu_bwU";
-          const a = getApi(
-            `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRvAAAAwMpdHeWlXl-lH0vp7lez4znKPIWSWvgvZFISdKx45AwJVP1Qp37YOrH7sqHMJ8C-vBDC546decipPHchJhHZL94RcTUfPa1jWzo-rSHaTlbNtjh-N68RkcToUCuY9v2HNpo5mziqkir37WU8FJEqVBIQ4k938TI3e7bf8xq-uwDZcxoUbO_ZJzPxremiQurAYzCTwRhE_V0&sensor=false&key=${ke}`
-          );
-          console.log(a);
+        
         };
         asyncFunction();
       });
