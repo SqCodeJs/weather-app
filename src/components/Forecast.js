@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-const Forecast = ({ weather, error }) => {
+const Forecast = ({ weather }) => {
   const timeZone = weather.timezone;
   // console.log(Array.isArray(weather.forecast), "typ", typeof weather.forecast);
   const hurlyForecast = weather.forecast
@@ -80,6 +80,5 @@ const SpanStyled = styled.span`
 `;
 Forecast.protoTypes = {
   weather: PropTypes.object,
-  error: PropTypes.bool,
 };
 export default Forecast;

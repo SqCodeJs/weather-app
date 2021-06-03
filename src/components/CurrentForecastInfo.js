@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const CurrentForecastInfo = ({ weather, error }) => {
+const CurrentForecastInfo = ({ weather }) => {
   const sunrise = weather.sys.sunrise;
   const sunset = weather.sys.sunset;
   const timeZone = weather.timezone - 3600;
@@ -83,6 +83,5 @@ const RowChilderenStyled = styled.div`
 `;
 CurrentForecastInfo.propTypes = {
   weather: PropTypes.object,
-  error: PropTypes.bool,
 };
 export default CurrentForecastInfo;

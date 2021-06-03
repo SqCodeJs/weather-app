@@ -5,13 +5,7 @@ import Forecast from "./Forecast";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const ForecastBoard = ({
-  city,
-  weather,
-  currentCity,
-  error,
-  handleCityRemove,
-}) => {
+const ForecastBoard = ({ weather, currentCity, error, handleCityRemove }) => {
   // console.log(weather);
 
   const forecastBoard = weather.map((item, i) => (
@@ -45,6 +39,7 @@ const ButtonStyled = styled.button`
 ForecastBoard.propTypes = {
   weather: PropTypes.array,
   error: PropTypes.bool,
+  currentCity: PropTypes.string,
   handleCityRemove: PropTypes.func,
 };
 export default ForecastBoard;

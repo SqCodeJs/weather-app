@@ -59,5 +59,6 @@ const ImageIconStyled = styled.img`
 `;
 CurrentForecast.propTypes = {
   weather: PropTypes.object,
+  currentCity: PropTypes.string,
 };
 export default CurrentForecast;

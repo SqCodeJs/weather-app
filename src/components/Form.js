@@ -13,7 +13,6 @@ const Form = ({ showCity, handleChange, city, carts }) => {
       />
       <ButtonStyled
         onClick={() => showCity(city)}
-        // onClick={showCity}
         opacity={carts}
         disabled={carts === 4 ? true : false}
       >
@@ -61,7 +60,6 @@ const ButtonStyled = styled.button`
 `;
 Form.propTypes = {
   showCity: PropTypes.func,
-  getPosition: PropTypes.func,
   handleChange: PropTypes.func,
   city: PropTypes.string,
   carts: PropTypes.number,
