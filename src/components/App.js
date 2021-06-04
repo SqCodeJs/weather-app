@@ -9,6 +9,12 @@ import ErrorComponent from "./ErrorComponent";
 import Suggestion from "./Suggestion";
 import Autocomplete from "./Autocomplete";
 
+import citiesDatabase from "./list.json";
+
+const apiGetCities = () => {
+  return citiesDatabase.map(e => e.name);
+}
+
 const LOCAL_STORAGE_KEY = "cities";
 
 const App = () => {
@@ -19,34 +25,37 @@ const App = () => {
   const [currentCity, setCurrentCity] = useState("");
   const [localData, setLocalData] = useState([]);
   const [isDisplayed, setIsDisplayed] = useState(false);
-  const [data, setData] = useState([]);
+  const [autocompleteCities, setAutocompleteCities] = useState([]);
   const displayToggle = () => {
     setIsDisplayed((prev) => !prev);
   };
   async function showCity(town) {
+    console.log("town", town)
+    console.log("currentCity", currentCity)
     if (town) {
       const currentAPI = `http://api.openweathermap.org/data/2.5/weather?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
       const forecastAPI = `http://api.openweathermap.org/data/2.5/forecast?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
       try {
-        let list = await getApi("list.json", {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        });
-        list = list.map((e) => e.name);
-        setData(list);
+
         const weatherData = await getApi(currentAPI);
         const forecastData = await getApi(forecastAPI);
         const data = Object.assign(weatherData, {
           forecast: forecastData.list,
         });
         setWeather(weather.concat(data));
+
+        // const tab = [1, 2, 3 ];
+        //
+        // const findIndex = tab.findIndex(elem => elem === 3);
+        // zamiast tab.indexOf(3);
+        // indexOf najlepiej nie uzywac
+        const isTownInLocalStorage = localData.find(el => el.toLocaleLowerCase() === town.toLocaleLowerCase());
         if (
           town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
-          localData.indexOf(town.toLocaleLowerCase()) === -1
+          !isTownInLocalStorage
         ) {
-          setLocalData((prev) => [town, ...prev]);
+          console.log('setlocaldata')
+          setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
         }
         setCarts(carts + 1);
         setCity("");
@@ -73,7 +82,25 @@ const App = () => {
   }, [localData]);
   ////////////////////////////
   const handleChange = (e) => {
-    setCity(e.target.value);
+    const city = e.target.value;
+    setCity(city);
+
+    console.log(autocompleteCities);
+    // let list = cities;
+    if (city.length > 3) {
+
+      // akcja po miasta
+      let list = apiGetCities();
+      console.log(list)
+      console.log(e.target.value);
+      const finalCities = list.filter(elem => elem.toLowerCase().startsWith(e.target.value.toLowerCase()))
+      setAutocompleteCities(finalCities);
+      console.log(finalCities);
+    } else {
+      console.log('p3 znaki')
+    }
+
+    // setData(list);
   };
 
   const handleCityRemove = (city) => {
@@ -88,7 +115,11 @@ const App = () => {
   const getPosition = useCallback(() => {
     console.log("getPosition");
     const geoPosition = navigator.geolocation;
-    if (geoPosition) {
+    console.log("geo", geoPosition)
+    // if({}) zwraca true
+    //
+    if (Object.keys(geoPosition).length > 0) {
+      console.log("sdfa")
       geoPosition.getCurrentPosition((location) => {
         const latitude = location.coords.latitude;
         const longitude = location.coords.longitude;
@@ -97,8 +128,8 @@ const App = () => {
         const asyncFunction = async () => {
           const data = await getApi(API);
           const cityName = data.address.city;
+          console.log("geo", geoPosition)
           setCurrentCity(cityName);
-        
         };
         asyncFunction();
       });
@@ -108,7 +139,7 @@ const App = () => {
   //useEffect
   useEffect(() => {
     // console.log("useEffect: getPosition");
-
+    console.log("mount")
     getPosition();
   }, []);
   useEffect(() => {
@@ -116,7 +147,9 @@ const App = () => {
     if (currentCity) showCity(currentCity);
   }, [currentCity]);
   ///
-  useEffect(() => setTimeout(displayToggle, 9000), []);
+  useEffect(() => {
+    setTimeout(displayToggle, 3000);
+  }, []);
   useEffect(() => {
     getLastSeen();
   }, [city]);
@@ -137,10 +170,9 @@ const App = () => {
           handleChange={handleChange}
           city={city}
           carts={carts}
-          data={data}
         />
         <Autocomplete
-          data={data}
+          data={autocompleteCities}
           city={city}
           showCity={showCity}
           setCity={setCity}
