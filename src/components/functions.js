@@ -20,15 +20,13 @@ const getLastCities = (LOCAL_STORAGE_KEY) => {
   return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 };
 function selectedToStorage(town, currentCity) {
-  const isTownInLocalStorage = getLastCities().find(
+  const isTownInLocalStorage = getLastCities("cities").find(
     (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
   );
-  if (
-    town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
-    !isTownInLocalStorage
-  )
-    return false;
-  else return true;
+  const isInLocation = town.toLocaleLowerCase() === currentCity.toLocaleLowerCase();
+  console.log("isTownInLocalStorage", isTownInLocalStorage)
+  console.log("isInLocation", isInLocation)
+  return (isTownInLocalStorage || isInLocation);
 }
 export {
   getApi,

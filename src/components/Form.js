@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Form = ({ showCity, handleChange, city, carts }) => {
+const Form = ({ children, showCity, handleChange, city, carts }) => {
   return (
     <FormStyled>
       <InputStyled
@@ -18,6 +18,7 @@ const Form = ({ showCity, handleChange, city, carts }) => {
       >
         +
       </ButtonStyled>
+        {children}
     </FormStyled>
   );
 };

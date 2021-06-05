@@ -50,19 +50,20 @@ const App = () => {
         // zamiast tab.indexOf(3);
         // indexOf najlepiej nie uzywac
 
-        // if (!selectedToStorage(town, currentCity))
-        //   setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
-
-        const isTownInLocalStorage = localData.find(
-          (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
-        );
-        if (
-          town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
-          !isTownInLocalStorage
-        ) {
-          console.log("setlocaldata");
+        console.log("SELECTED TO STORAGE", selectedToStorage(town, currentCity))
+        if (!selectedToStorage(town, currentCity))
           setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
-        }
+
+        // const isTownInLocalStorage = localData.find(
+        //   (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
+        // );
+        // if (
+        //   town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
+        //   !isTownInLocalStorage
+        // ) {
+        //   console.log("setlocaldata");
+        //   setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
+        // }
         setCarts(carts + 1);
         setCity("");
         setError(false);
@@ -129,18 +130,21 @@ const App = () => {
     // if (Object.keys(geoPosition).length > 0)
     if (geoPosition) {
       console.log("sdfa");
-      geoPosition.getCurrentPosition((location) => {
+      geoPosition.getCurrentPosition(async (location) => {
         const latitude = location.coords.latitude;
         const longitude = location.coords.longitude;
         const apiToken = "pk.5390fac0de44ee903fcd342c08b9638f";
         const API = `https://us1.locationiq.com/v1/reverse.php?key=${apiToken}&lat=${latitude}&lon=${longitude}&format=json`;
-        const asyncFunction = async () => {
-          const data = await getApi(API);
-          const cityName = data.address.city;
-          console.log("geo", geoPosition);
-          setCurrentCity(cityName);
-        };
-        asyncFunction();
+        const dt = await getApi(API)
+        const cityName = dt.address.city;
+        setCurrentCity(cityName);
+        console.log(dt)
+        // const asyncFunction = async () => {
+        //   const data = await getApi(API);
+        //   const cityName = data.address.city;
+        //   console.log("geo", geoPosition);
+        //   setCurrentCity(cityName);
+        // };
       });
     }
   }, []);
@@ -171,21 +175,45 @@ const App = () => {
   //   "Twoja pozycja: " + currentCity + "!"
   // );
 
+  const getBackgorundBasedOn = () => {
+    const types = {
+      // images SRC
+      "Clear": "",
+      "Rain": "",
+      "Clouds": ""
+    }
+
+    return types[
+        weather.weather[0].main //CLear, rain
+      ] || "none"
+  }
+  //
+  // useEffect(() => {
+  //   if (weather) {
+  //     setCurrentBackround(getBackgorundBasedOn());
+  //   }
+  // }, [weather])
+
+  const url = getBackgorundBasedOn();
   return (
     <React.Fragment>
-      <Wrapper>
+      <Wrapper
+        backgroundSrc={url}
+      >
         <Form
           showCity={showCity}
           handleChange={handleChange}
           city={city}
           carts={carts}
-        />
-        <Autocomplete
-          data={autocompleteCities}
-          city={city}
-          showCity={showCity}
-          setCity={setCity}
-        />
+        >
+          <Autocomplete
+              data={autocompleteCities}
+              city={city}
+              showCity={showCity}
+              setCity={setCity}
+          />
+        </Form>
+
         {error && (
           <ErrorComponent
             city={city}
@@ -220,6 +248,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1660px;
   min-height: 100vh;
+  backround-image: url(${(props) => props.backgroundSrc ? props.backgroundSrc : "" });
   background: linear-gradient(
     320deg,
     rgba(140, 98, 167, 1) 0%,
