@@ -16,5 +16,24 @@ const findCityToRemove = (weatherTab, city) => {
   const index = weatherTab.findIndex((e) => e.name === city);
   return index;
 };
-
-export { getApi, findCityToRemove, titleCase };
+const getLastCities = (LOCAL_STORAGE_KEY) => {
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+};
+function selectedToStorage(town, currentCity) {
+  const isTownInLocalStorage = getLastCities().find(
+    (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
+  );
+  if (
+    town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
+    !isTownInLocalStorage
+  )
+    return false;
+  else return true;
+}
+export {
+  getApi,
+  findCityToRemove,
+  titleCase,
+  getLastCities,
+  selectedToStorage,
+};

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { getApi } from "./functions";
+import { getApi, getLastCities, selectedToStorage } from "./functions";
 
 import styled from "styled-components";
 
@@ -12,8 +12,8 @@ import Autocomplete from "./Autocomplete";
 import citiesDatabase from "./list.json";
 
 const apiGetCities = () => {
-  return citiesDatabase.map(e => e.name);
-}
+  return citiesDatabase.map((e) => e.name);
+};
 
 const LOCAL_STORAGE_KEY = "cities";
 
@@ -29,14 +29,14 @@ const App = () => {
   const displayToggle = () => {
     setIsDisplayed((prev) => !prev);
   };
+
   async function showCity(town) {
-    console.log("town", town)
-    console.log("currentCity", currentCity)
+    console.log("town", town);
+    console.log("currentCity", currentCity);
     if (town) {
       const currentAPI = `http://api.openweathermap.org/data/2.5/weather?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
       const forecastAPI = `http://api.openweathermap.org/data/2.5/forecast?q=${town}&appid=afed69df412b0f195b8e5623033bda82&units=metric&lang=pl`;
       try {
-
         const weatherData = await getApi(currentAPI);
         const forecastData = await getApi(forecastAPI);
         const data = Object.assign(weatherData, {
@@ -49,12 +49,18 @@ const App = () => {
         // const findIndex = tab.findIndex(elem => elem === 3);
         // zamiast tab.indexOf(3);
         // indexOf najlepiej nie uzywac
-        const isTownInLocalStorage = localData.find(el => el.toLocaleLowerCase() === town.toLocaleLowerCase());
+
+        // if (!selectedToStorage(town, currentCity))
+        //   setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
+
+        const isTownInLocalStorage = localData.find(
+          (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
+        );
         if (
           town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
           !isTownInLocalStorage
         ) {
-          console.log('setlocaldata')
+          console.log("setlocaldata");
           setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
         }
         setCarts(carts + 1);
@@ -69,9 +75,10 @@ const App = () => {
   }
 
   const getLastSeen = () => {
-    console.log("POBIERAM");
-    if (localStorage.getItem(LOCAL_STORAGE_KEY) !== null) {
-      setLocalData(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
+    const nextCities = getLastCities(LOCAL_STORAGE_KEY);
+
+    if (nextCities !== null) {
+      setLocalData(nextCities);
     }
   };
   const sendLastSeen = useCallback(() => {
@@ -88,16 +95,17 @@ const App = () => {
     console.log(autocompleteCities);
     // let list = cities;
     if (city.length > 3) {
-
       // akcja po miasta
       let list = apiGetCities();
-      console.log(list)
+      console.log(list);
       console.log(e.target.value);
-      const finalCities = list.filter(elem => elem.toLowerCase().startsWith(e.target.value.toLowerCase()))
+      const finalCities = list.filter((elem) =>
+        elem.toLowerCase().startsWith(e.target.value.toLowerCase())
+      );
       setAutocompleteCities(finalCities);
       console.log(finalCities);
     } else {
-      console.log('p3 znaki')
+      console.log("p3 znaki");
     }
 
     // setData(list);
@@ -115,11 +123,12 @@ const App = () => {
   const getPosition = useCallback(() => {
     console.log("getPosition");
     const geoPosition = navigator.geolocation;
-    console.log("geo", geoPosition)
+    console.log("geo", geoPosition);
     // if({}) zwraca true
     //
-    if (Object.keys(geoPosition).length > 0) {
-      console.log("sdfa")
+    // if (Object.keys(geoPosition).length > 0)
+    if (geoPosition) {
+      console.log("sdfa");
       geoPosition.getCurrentPosition((location) => {
         const latitude = location.coords.latitude;
         const longitude = location.coords.longitude;
@@ -128,7 +137,7 @@ const App = () => {
         const asyncFunction = async () => {
           const data = await getApi(API);
           const cityName = data.address.city;
-          console.log("geo", geoPosition)
+          console.log("geo", geoPosition);
           setCurrentCity(cityName);
         };
         asyncFunction();
@@ -139,7 +148,7 @@ const App = () => {
   //useEffect
   useEffect(() => {
     // console.log("useEffect: getPosition");
-    console.log("mount")
+    console.log("mount");
     getPosition();
   }, []);
   useEffect(() => {
