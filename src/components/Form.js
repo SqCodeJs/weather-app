@@ -5,59 +5,97 @@ import PropTypes from "prop-types";
 const Form = ({ children, showCity, handleChange, city, carts }) => {
   return (
     <FormStyled>
-      <InputStyled
-        type="text"
-        value={city}
-        onChange={handleChange}
-        placeholder="Miasto"
-      />
-      <ButtonStyled
-        onClick={() => showCity(city)}
-        opacity={carts}
-        disabled={carts === 4 ? true : false}
-      >
-        +
-      </ButtonStyled>
-        {children}
+      <InputChildStyled>
+        <InputStyled
+          type="text"
+          value={city}
+          onChange={handleChange}
+          placeholder="Miasto"
+          borderBottom={city}
+        />
+      </InputChildStyled>
+      <ButtonChildStyled>
+        {city.length > 2 ? (
+          <ButtonStyled
+            onClick={() => showCity(city)}
+            opacity={carts}
+            disabled={carts === 10 ? true : false}
+          >
+            +
+          </ButtonStyled>
+        ) : null}
+      </ButtonChildStyled>
+      {children}
     </FormStyled>
   );
 };
 const FormStyled = styled.div`
-  width: 80%;
-  height: 50px;
-  margin-top: 20px;
+  box-sizing: border-box;
+
+  margin: 0 40px;
+  position: relative;
+
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 40px 0;
+  width: 100%;
+  /* height: 50px; */
+  display: flex;
+  justify-content: left;
 `;
+const InputChildStyled = styled.div`
+  width: 45%;
+`;
+
 const InputStyled = styled.input`
-  width: 80%;
-  height: 20px;
-  margin: 0 10px;
-  padding: 10px;
-  background-color: transparent;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  margin: 0 20px;
+  flex-grow: 0;
+  width: 100%;
+  border-radius: ${(props) =>
+    props.borderBottom.length > 3 ? " 10px 10px 0 0" : "10px"};
 
-  color: #4e4c4cd2;
+  border: none;
+  box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
 
-  border: 2px solid white;
-  border-radius: 25px;
+  font-size: 18px;
+  color: #222;
+  line-height: 24px;
+  font-family: arial, sans-serif;
+  background-color: rgba(255, 255, 255, 1);
+
   &:focus {
     outline: none;
   }
 `;
-
-const ButtonStyled = styled.button`
+const ButtonChildStyled = styled.div`
+  box-sizing: border-box;
+  margin: 0 20px;
+  padding: 0;
   width: 5%;
-  height: 40px;
+  flex-grow: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ButtonStyled = styled.button`
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 
+  width: 50%;
+
+  flex-grow: 0;
   border: 2px solid white;
   border-radius: 25px;
   background-color: transparent;
   opacity: ${(props) => (props.opacity === 4 ? "0.3" : "")};
   cursor: ${(props) => (props.opacity === 4 ? "" : "pointer")};
-  padding: 0;
-  font-size: 20px;
-  line-height: 34px;
+  font-size: 22px;
+  line-height: 32px;
+  color: #222;
+
+  font-family: arial, sans-serif;
 `;
 Form.propTypes = {
   showCity: PropTypes.func,

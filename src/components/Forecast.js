@@ -1,4 +1,5 @@
 import React from "react";
+import { getIconBasedOn } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 const Forecast = ({ weather }) => {
@@ -16,8 +17,8 @@ const Forecast = ({ weather }) => {
         </HourStyled>
         <WeatherIconStyled>
           <img
-            // style={{ width: "40px" }}
-            src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
+            // src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
+            src={getIconBasedOn(weather.forecast[i].weather[0].icon)}
             alt="ok"
           />
         </WeatherIconStyled>
@@ -33,42 +34,45 @@ const Forecast = ({ weather }) => {
   );
 };
 const ForecastStyled = styled.div`
-  width: 90%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
 
   margin: 0 auto;
   overflow-x: scroll;
 
   display: flex;
   justify-content: flex-start;
-  flex-grow: 1;
+  flex-grow: 0;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 const ColumnsStyled = styled.div`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   width: 30%;
-  height: 120px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  padding-bottom: 10px;
-
   color: rgba(255, 255, 255, 0.792);
   font-family: sans-serif;
   text-align: center;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.915); ;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.915); ;
 `;
 const WeatherIconStyled = styled.div`
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 `;
 const HourStyled = styled.p`
-  font-size: 18px;
+  font-size: 16px;
 `;
 const TemperatureStyled = styled(HourStyled)`
   font-size: 16px;

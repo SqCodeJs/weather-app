@@ -1,11 +1,9 @@
 import React from "react";
+import { getIconBasedOn } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const CurrentForecast = ({ weather, currentCity }) => {
-  const iconurl =
-    "http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
-
   return (
     <CurrentForecastStyled>
       <NameStyled>
@@ -21,13 +19,16 @@ const CurrentForecast = ({ weather, currentCity }) => {
         <span>&#8451;</span>
       </TemperatureStyled>
       <WeatherIconStyled>
-        <ImageIconStyled src={iconurl} alt="ok" />
+        <ImageIconStyled
+          src={getIconBasedOn(weather.weather[0].icon)}
+          alt="ok"
+        />
       </WeatherIconStyled>
     </CurrentForecastStyled>
   );
 };
 const CurrentForecastStyled = styled.div`
-  width: 90%;
+  width: 100%;
 
   margin: 20px auto;
 
@@ -36,9 +37,9 @@ const CurrentForecastStyled = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.915);
 `;
 const NameStyled = styled.h1`
-  font-size: 34px;
+  font-size: 32px;
   text-align: center;
-  padding: 5px 10px;
+  padding: 0 5px;
   font-weight: normal;
 `;
 const DescriptionSTyled = styled(NameStyled)`
@@ -48,9 +49,9 @@ const DescriptionSTyled = styled(NameStyled)`
 `;
 const TemperatureStyled = styled(NameStyled)``;
 const WeatherIconStyled = styled.div`
-  padding-bottom: 5px;
+  padding-bottom: 20px;
   width: 100%;
-  height: 60px;
+  height: 36px;
 `;
 const ImageIconStyled = styled.img`
   display: block;

@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { getApi, getLastCities, selectedToStorage } from "./functions";
+import {
+  getApi,
+  getLastCities,
+  selectedToStorage,
+  getBackgorundBasedOn,
+} from "./functions";
 
 import styled from "styled-components";
 
@@ -18,6 +23,7 @@ const apiGetCities = () => {
 const LOCAL_STORAGE_KEY = "cities";
 
 const App = () => {
+  // console.log("START");
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
   const [error, setError] = useState(false);
@@ -26,10 +32,18 @@ const App = () => {
   const [localData, setLocalData] = useState([]);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
+  const [currentBackround, setCurrentBackround] = useState();
+  const [activeCart, setActiveCart] = useState(0);
+
   const displayToggle = () => {
     setIsDisplayed((prev) => !prev);
   };
-
+  function nextCart() {
+    setActiveCart((prev) => prev + 1);
+  }
+  function prevCart() {
+    setActiveCart((prev) => prev - 1);
+  }
   async function showCity(town) {
     console.log("town", town);
     console.log("currentCity", currentCity);
@@ -41,32 +55,24 @@ const App = () => {
         const forecastData = await getApi(forecastAPI);
         const data = Object.assign(weatherData, {
           forecast: forecastData.list,
+          backgroundImage: getBackgorundBasedOn(weatherData.weather[0].main),
         });
-        setWeather(weather.concat(data));
 
-        // const tab = [1, 2, 3 ];
-        //
-        // const findIndex = tab.findIndex(elem => elem === 3);
-        // zamiast tab.indexOf(3);
-        // indexOf najlepiej nie uzywac
+        if (weather.every((e) => e.name !== weatherData.name)) {
+          setWeather(weather.concat(data));
 
-        console.log("SELECTED TO STORAGE", selectedToStorage(town, currentCity))
-        if (!selectedToStorage(town, currentCity))
-          setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
+          // console.log(
+          //   "SELECTED TO STORAGE",
+          //   selectedToStorage(town, currentCity)
+          // );
+          if (!selectedToStorage(town, currentCity))
+            setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
 
-        // const isTownInLocalStorage = localData.find(
-        //   (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
-        // );
-        // if (
-        //   town.toLocaleLowerCase() !== currentCity.toLocaleLowerCase() &&
-        //   !isTownInLocalStorage
-        // ) {
-        //   console.log("setlocaldata");
-        //   setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
-        // }
-        setCarts(carts + 1);
-        setCity("");
-        setError(false);
+          setCarts(carts + 1);
+          setActiveCart((prev) => prev + 1);
+          setCity("");
+          setError(false);
+        }
       } catch (error) {
         console.log(error.message);
         setCity("");
@@ -94,12 +100,12 @@ const App = () => {
     setCity(city);
 
     console.log(autocompleteCities);
-    // let list = cities;
-    if (city.length > 3) {
+
+    if (city.length > 2) {
       // akcja po miasta
       let list = apiGetCities();
-      console.log(list);
-      console.log(e.target.value);
+      // console.log(list);
+      // console.log(e.target.value);
       const finalCities = list.filter((elem) =>
         elem.toLowerCase().startsWith(e.target.value.toLowerCase())
       );
@@ -108,26 +114,22 @@ const App = () => {
     } else {
       console.log("p3 znaki");
     }
-
-    // setData(list);
   };
 
   const handleCityRemove = (city) => {
     const tempWeather = [...weather];
     const newWeather = tempWeather.filter((e) => e.name !== city);
-    const index = tempWeather.length - newWeather.length;
 
     setWeather(newWeather);
-    setCarts(carts - index);
+    setCarts(carts - 1);
+    setActiveCart(weather.length - 1);
   };
 
   const getPosition = useCallback(() => {
-    console.log("getPosition");
     const geoPosition = navigator.geolocation;
-    console.log("geo", geoPosition);
-    // if({}) zwraca true
-    //
+
     // if (Object.keys(geoPosition).length > 0)
+    // if (Object.keys(geoPosition).length !== 0)
     if (geoPosition) {
       console.log("sdfa");
       geoPosition.getCurrentPosition(async (location) => {
@@ -135,16 +137,9 @@ const App = () => {
         const longitude = location.coords.longitude;
         const apiToken = "pk.5390fac0de44ee903fcd342c08b9638f";
         const API = `https://us1.locationiq.com/v1/reverse.php?key=${apiToken}&lat=${latitude}&lon=${longitude}&format=json`;
-        const dt = await getApi(API)
+        const dt = await getApi(API);
         const cityName = dt.address.city;
         setCurrentCity(cityName);
-        console.log(dt)
-        // const asyncFunction = async () => {
-        //   const data = await getApi(API);
-        //   const cityName = data.address.city;
-        //   console.log("geo", geoPosition);
-        //   setCurrentCity(cityName);
-        // };
       });
     }
   }, []);
@@ -175,30 +170,21 @@ const App = () => {
   //   "Twoja pozycja: " + currentCity + "!"
   // );
 
-  const getBackgorundBasedOn = () => {
-    const types = {
-      // images SRC
-      "Clear": "",
-      "Rain": "",
-      "Clouds": ""
+  useEffect(() => {
+    console.log("Background ");
+    if (weather.length > 0) {
+      setCurrentBackround(weather[activeCart - 1].backgroundImage);
     }
-
-    return types[
-        weather.weather[0].main //CLear, rain
-      ] || "none"
-  }
-  //
-  // useEffect(() => {
-  //   if (weather) {
-  //     setCurrentBackround(getBackgorundBasedOn());
-  //   }
-  // }, [weather])
-
-  const url = getBackgorundBasedOn();
+  }, [activeCart]);
+  console.log("RENDER", weather);
   return (
     <React.Fragment>
       <Wrapper
-        backgroundSrc={url}
+        background={
+          currentBackround
+            ? currentBackround
+            : "https://images.unsplash.com/photo-1491484925566-336b202157a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+        }
       >
         <Form
           showCity={showCity}
@@ -207,10 +193,10 @@ const App = () => {
           carts={carts}
         >
           <Autocomplete
-              data={autocompleteCities}
-              city={city}
-              showCity={showCity}
-              setCity={setCity}
+            data={autocompleteCities}
+            city={city}
+            showCity={showCity}
+            setCity={setCity}
           />
         </Form>
 
@@ -232,31 +218,43 @@ const App = () => {
             displayToggle={displayToggle}
           />
         ) : null}
-        <ForecastBoard
-          weather={weather}
-          currentCity={currentCity}
-          error={error}
-          handleCityRemove={handleCityRemove}
-        />
+
+        {weather.length ? (
+          <ForecastBoard
+            weather={weather}
+            currentCity={currentCity}
+            error={error}
+            handleCityRemove={handleCityRemove}
+            carts={carts}
+            activeCart={activeCart}
+            nextCart={nextCart}
+            prevCart={prevCart}
+          />
+        ) : null}
       </Wrapper>
     </React.Fragment>
   );
 };
 const Wrapper = styled.div`
   margin: 0 auto;
-
+  padding: 0;
+  box-sizing: border-box;
+  opacity: 0.8;
   width: 100%;
-  max-width: 1660px;
-  min-height: 100vh;
-  backround-image: url(${(props) => props.backgroundSrc ? props.backgroundSrc : "" });
-  background: linear-gradient(
+  min-width: 1024px;
+  height: 100vh;
+  background-image: url(${(props) => props.background});
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: white;
+  /* background: linear-gradient(
     320deg,
     rgba(140, 98, 167, 1) 0%,
     rgba(38, 78, 166, 1) 30%,
     rgba(0, 212, 255, 1) 90%
-  );
-  opacity: 0.7;
-  border: 2px solid rgb(216, 215, 215);
+  ); */
+
+  /* border: 2px solid rgb(216, 215, 215); */
 `;
 
 export default App;

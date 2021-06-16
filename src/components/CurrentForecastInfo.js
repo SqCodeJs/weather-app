@@ -19,32 +19,33 @@ const CurrentForecastInfo = ({ weather }) => {
       <ColumnsStyled>
         <RowStyled>
           <RowChilderenStyled>
-            <h4>wschód</h4>
+            <TitleStyledH4>wschód</TitleStyledH4>
             <p>{sunriseTime}</p>
           </RowChilderenStyled>
           <RowChilderenStyled>
-            <h4>zachód</h4> <p>{sunSetTime}</p>
+            <TitleStyledH4>zachód</TitleStyledH4> <p>{sunSetTime}</p>
           </RowChilderenStyled>
         </RowStyled>
         <RowStyled>
           <RowChilderenStyled>
-            <h4>wilgotność</h4> <p>{weather.main.humidity} %</p>
+            <TitleStyledH4>wilgotność</TitleStyledH4>{" "}
+            <p>{weather.main.humidity} %</p>
           </RowChilderenStyled>
           <RowChilderenStyled>
-            <h4>ciśnienie </h4>
+            <TitleStyledH4>ciśnienie </TitleStyledH4>
             <p>{weather.main.pressure} hPa</p>
           </RowChilderenStyled>
         </RowStyled>
         <RowStyled>
           <RowChilderenStyled>
-            <h4>odczuwalna</h4>
+            <TitleStyledH4>odczuwalna</TitleStyledH4>
             <p>
               {Math.floor(weather.main.feels_like)}
               <span>&#8451;</span>{" "}
             </p>
           </RowChilderenStyled>
           <RowChilderenStyled>
-            <h4>wiatr</h4>
+            <TitleStyledH4>wiatr</TitleStyledH4>
             <p>{weather.wind.speed} m/s</p>
           </RowChilderenStyled>
         </RowStyled>
@@ -53,11 +54,17 @@ const CurrentForecastInfo = ({ weather }) => {
   );
 };
 const CurrentForecastInfoStyled = styled.div`
-  display: flex;
   margin: 0 auto;
-  width: 80%;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+
+  width: 90%;
 `;
 const ColumnsStyled = styled.div`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   width: 100%;
 
   display: flex;
@@ -70,16 +77,26 @@ const ColumnsStyled = styled.div`
   text-align: center;
 `;
 const RowStyled = styled.div`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   display: flex;
 
   width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.915); ;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.915);
 `;
 const RowChilderenStyled = styled.div`
-  margin: 5px 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+const TitleStyledH4 = styled.h4`
+  font-size: 14px;
+  line-height: 18px;
 `;
 CurrentForecastInfo.propTypes = {
   weather: PropTypes.object,
