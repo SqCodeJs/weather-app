@@ -3,9 +3,9 @@ import { getIconBasedOn } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const CurrentForecast = ({ weather, currentCity }) => {
+const CurrentForecast = ({ weather, currentCity, setMainDispelyOnCurrent }) => {
   return (
-    <CurrentForecastStyled>
+    <CurrentForecastStyled onClick={setMainDispelyOnCurrent}>
       <NameStyled>
         {currentCity === weather.name ? (
           <p>Obecnie znajdujesz sie {weather.name} </p>
@@ -32,9 +32,10 @@ const CurrentForecastStyled = styled.div`
 
   margin: 20px auto;
 
-  color: rgba(255, 255, 255, 0.915);
+  color: rgba(255, 255, 255, 1);
   border-top: 1px solid rgba(255, 255, 255, 0.915);
   border-bottom: 1px solid rgba(255, 255, 255, 0.915);
+  cursor: pointer;
 `;
 const NameStyled = styled.h1`
   font-size: 32px;

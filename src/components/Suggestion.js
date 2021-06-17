@@ -4,13 +4,9 @@ import { titleCase } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Suggestion = ({ localData, showCity, carts, displayToggle }) => {
+const Suggestion = ({ localData, showCity, activeCart, displayToggle }) => {
   const list = localData.map((item, i) => (
-    <SuggestionButton
-      disabled={carts === 4 ? true : false}
-      key={i}
-      onClick={() => showCity(item)}
-    >
+    <SuggestionButton key={i} onClick={() => showCity(item)}>
       {titleCase(item)}
     </SuggestionButton>
   ));

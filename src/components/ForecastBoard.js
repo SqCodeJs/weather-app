@@ -10,39 +10,68 @@ const ForecastBoard = ({
   currentCity,
   error,
   handleCityRemove,
-  carts,
+
   activeCart,
   prevCart,
   nextCart,
+  isForecastDispled,
+  setMainDispelyOnForecast,
+  setMainDispelyOnCurrent,
+  forecastIndex,
 }) => {
+  const cartslength = weather.length;
   const forecastBoard = weather
     .map((item, i) => (
       <WrappStyled key={i}>
         <ButtonsStyled>
-          <ButtonStyled onClick={prevCart} disabled={activeCart === 1}>
+          <ButtonPrevStyled onClick={prevCart} disabled={activeCart === 1}>
             Prev
-          </ButtonStyled>
+          </ButtonPrevStyled>
         </ButtonsStyled>
         <ForecastBoardStyled weather={item}>
-          <ButtonStyled onClick={() => handleCityRemove(item.name)}>
+          <ButtonStyled
+            onClick={() => handleCityRemove(item.name)}
+            opacity={activeCart}
+            disabled={activeCart === 1}
+          >
             Usun
           </ButtonStyled>
-          <CurrentForecast
+          {isForecastDispled ? (
+            <CurrentForecast
+              weather={item.forecast[forecastIndex]}
+              currentCity={currentCity}
+              erorr={error}
+              setMainDispelyOnCurrent={setMainDispelyOnCurrent}
+            />
+          ) : (
+            <CurrentForecast
+              weather={item}
+              currentCity={currentCity}
+              erorr={error}
+              setMainDispelyOnCurrent={setMainDispelyOnCurrent}
+            />
+          )}
+          <Forecast
             weather={item}
-            currentCity={currentCity}
             erorr={error}
+            setMainDispelyOnForecast={setMainDispelyOnForecast}
           />
-          <Forecast weather={item} erorr={error} />
           <CurrentForecastInfo weather={item} erorr={error} />
         </ForecastBoardStyled>
         <ButtonsStyled>
-          <ButtonStyled onClick={nextCart} disabled={activeCart === carts}>
+          <ButtonNextStyled
+            onClick={nextCart}
+            disabled={activeCart === weather.length}
+            opacity={activeCart}
+            cartslength={cartslength}
+          >
             Next
-          </ButtonStyled>
+          </ButtonNextStyled>
         </ButtonsStyled>
       </WrappStyled>
     ))
     .filter((e, i) => i === activeCart - 1);
+
   return <>{forecastBoard}</>;
 };
 const WrappStyled = styled.div`
@@ -64,13 +93,10 @@ const ForecastBoardStyled = styled.div`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- 
+
   flex-grow: 0;
 
   width: 90%;
-  /* background-image: url(${(props) =>
-    props.background ? props.background : ""}); */
-  background-repeat: no-repeat; */
 `;
 const ButtonStyled = styled.button`
   margin: 0;
@@ -85,9 +111,16 @@ const ButtonStyled = styled.button`
   border: 2px solid white;
   border-radius: 25px;
   background-color: transparent;
-  opacity: ${(props) => (props.opacity === 4 ? "0.3" : "")};
+
   cursor: pointer;
 `;
+const ButtonPrevStyled = styled(ButtonStyled)`
+  opacity: ${(props) => (props.opacity === 0 ? "0.3" : "1")};
+`;
+const ButtonNextStyled = styled(ButtonStyled)`
+  opacity: ${(props) => (props.opacity === props.cartslength ? "0.3" : "1")};
+`;
+
 ForecastBoard.propTypes = {
   weather: PropTypes.array,
   error: PropTypes.bool,

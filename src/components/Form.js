@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Form = ({ children, showCity, handleChange, city, carts }) => {
+const Form = ({ children, showCity, handleChange, city, activeCart }) => {
   return (
     <FormStyled>
       <InputChildStyled>
@@ -18,8 +18,8 @@ const Form = ({ children, showCity, handleChange, city, carts }) => {
         {city.length > 2 ? (
           <ButtonStyled
             onClick={() => showCity(city)}
-            opacity={carts}
-            disabled={carts === 10 ? true : false}
+            opacity={activeCart}
+            disabled={activeCart === 10 ? true : false}
           >
             +
           </ButtonStyled>
@@ -89,7 +89,8 @@ const ButtonStyled = styled.button`
   border: 2px solid white;
   border-radius: 25px;
   background-color: transparent;
-  opacity: ${(props) => (props.opacity === 4 ? "0.3" : "")};
+
+  opacity: ${(props) => (props.opacity === 4 ? "0.3" : "1")};
   cursor: ${(props) => (props.opacity === 4 ? "" : "pointer")};
   font-size: 22px;
   line-height: 32px;

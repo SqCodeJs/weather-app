@@ -2,13 +2,13 @@ import React from "react";
 import { getIconBasedOn } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-const Forecast = ({ weather }) => {
+const Forecast = ({ weather, setMainDispelyOnForecast }) => {
   const timeZone = weather.timezone;
   // console.log(Array.isArray(weather.forecast), "typ", typeof weather.forecast);
   const hurlyForecast = weather.forecast
     // .filter((treeHours, idx) => idx < 16)
     .map((item, i) => (
-      <ColumnsStyled key={i}>
+      <ColumnsStyled key={i} onClick={() => setMainDispelyOnForecast(i)}>
         <HourStyled>
           {new Date((item.dt + timeZone) * 1000).toLocaleTimeString("en-GB", {
             hour: "numeric",
@@ -18,7 +18,8 @@ const Forecast = ({ weather }) => {
         <WeatherIconStyled>
           <img
             // src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`}
-            src={getIconBasedOn(weather.forecast[i].weather[0].icon)}
+            //src={getIconBasedOn(weather.forecast[i].weather[0].icon)}
+            src={getIconBasedOn(item.weather[0].icon)}
             alt="ok"
           />
         </WeatherIconStyled>
@@ -55,6 +56,7 @@ const ColumnsStyled = styled.div`
   padding: 0;
   box-sizing: border-box;
   width: 30%;
+  cursor: pointer;
 
   display: flex;
   flex-direction: column;

@@ -27,13 +27,15 @@ const App = () => {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState([]);
   const [error, setError] = useState(false);
-  const [carts, setCarts] = useState(0);
+
   const [currentCity, setCurrentCity] = useState("");
   const [localData, setLocalData] = useState([]);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [autocompleteCities, setAutocompleteCities] = useState([]);
   const [currentBackround, setCurrentBackround] = useState();
   const [activeCart, setActiveCart] = useState(0);
+  const [isForecastDispled, setisForecastDispled] = useState(false);
+  const [forecastIndex, setForecastIndex] = useState(0);
 
   const displayToggle = () => {
     setIsDisplayed((prev) => !prev);
@@ -43,6 +45,13 @@ const App = () => {
   }
   function prevCart() {
     setActiveCart((prev) => prev - 1);
+  }
+  function setMainDispelyOnForecast(i) {
+    setisForecastDispled(true);
+    setForecastIndex(i);
+  }
+  function setMainDispelyOnCurrent() {
+    setisForecastDispled(false);
   }
   async function showCity(town) {
     console.log("town", town);
@@ -68,10 +77,10 @@ const App = () => {
           if (!selectedToStorage(town, currentCity))
             setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
 
-          setCarts(carts + 1);
-          setActiveCart((prev) => prev + 1);
+          setActiveCart(weather.length + 1);
           setCity("");
           setError(false);
+          setisForecastDispled(false);
         }
       } catch (error) {
         console.log(error.message);
@@ -121,7 +130,7 @@ const App = () => {
     const newWeather = tempWeather.filter((e) => e.name !== city);
 
     setWeather(newWeather);
-    setCarts(carts - 1);
+
     setActiveCart(weather.length - 1);
   };
 
@@ -190,7 +199,7 @@ const App = () => {
           showCity={showCity}
           handleChange={handleChange}
           city={city}
-          carts={carts}
+          activeCart={activeCart}
         >
           <Autocomplete
             data={autocompleteCities}
@@ -211,7 +220,6 @@ const App = () => {
         )}
         {isDisplayed ? (
           <Suggestion
-            carts={carts}
             localData={localData}
             city={city}
             showCity={showCity}
@@ -225,10 +233,13 @@ const App = () => {
             currentCity={currentCity}
             error={error}
             handleCityRemove={handleCityRemove}
-            carts={carts}
             activeCart={activeCart}
             nextCart={nextCart}
             prevCart={prevCart}
+            isForecastDispled={isForecastDispled}
+            setMainDispelyOnForecast={setMainDispelyOnForecast}
+            setMainDispelyOnCurrent={setMainDispelyOnCurrent}
+            forecastIndex={forecastIndex}
           />
         ) : null}
       </Wrapper>
@@ -239,14 +250,14 @@ const Wrapper = styled.div`
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
-  opacity: 0.8;
+
   width: 100%;
   min-width: 1024px;
   height: 100vh;
   background-image: url(${(props) => props.background});
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-color: white;
+
   /* background: linear-gradient(
     320deg,
     rgba(140, 98, 167, 1) 0%,

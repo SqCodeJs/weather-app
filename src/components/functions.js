@@ -85,6 +85,7 @@ const getBackgorundBasedOn = (image) => {
     // "Clouds" || "ok" //CLear, rain
   ];
 };
+
 export {
   getApi,
   findCityToRemove,
