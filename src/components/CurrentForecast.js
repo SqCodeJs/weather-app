@@ -3,16 +3,24 @@ import { getIconBasedOn } from "./functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const CurrentForecast = ({ weather, currentCity, setMainDispelyOnCurrent }) => {
+const CurrentForecast = ({
+  weather,
+  currentCity,
+  setMainDispelyOnCurrent,
+  name,
+  timeZone,
+}) => {
   return (
     <CurrentForecastStyled onClick={setMainDispelyOnCurrent}>
       <NameStyled>
-        {currentCity === weather.name ? (
-          <p>Obecnie znajdujesz sie {weather.name} </p>
-        ) : (
-          weather.name
-        )}
+        {currentCity === name ? <p>Obecnie znajdujesz sie {name} </p> : name}
       </NameStyled>
+      <TimeStyled>
+        {new Date((weather.dt + timeZone) * 1000).toLocaleTimeString("en-GB", {
+          hour: "numeric",
+          minute: "2-digit",
+        })}
+      </TimeStyled>
       <DescriptionSTyled>{weather.weather[0].description}</DescriptionSTyled>
       <TemperatureStyled>
         {Math.floor(weather.main.temp)}
@@ -38,12 +46,16 @@ const CurrentForecastStyled = styled.div`
   cursor: pointer;
 `;
 const NameStyled = styled.h1`
-  font-size: 32px;
+  font-size: 26px;
   text-align: center;
   padding: 0 5px;
   font-weight: normal;
 `;
+const TimeStyled = styled(NameStyled)`
+  font-size: 22px;
+`;
 const DescriptionSTyled = styled(NameStyled)`
+  font-size: 20px;
   &::first-letter {
     text-transform: uppercase;
   }

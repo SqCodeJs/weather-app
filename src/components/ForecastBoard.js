@@ -20,6 +20,7 @@ const ForecastBoard = ({
   forecastIndex,
 }) => {
   const cartslength = weather.length;
+
   const forecastBoard = weather
     .map((item, i) => (
       <WrappStyled key={i}>
@@ -38,6 +39,8 @@ const ForecastBoard = ({
           </ButtonStyled>
           {isForecastDispled ? (
             <CurrentForecast
+              timeZone={weather[i].timezone}
+              name={item.name}
               weather={item.forecast[forecastIndex]}
               currentCity={currentCity}
               erorr={error}
@@ -45,6 +48,8 @@ const ForecastBoard = ({
             />
           ) : (
             <CurrentForecast
+              timeZone={weather[i].timezone}
+              name={item.name}
               weather={item}
               currentCity={currentCity}
               erorr={error}
