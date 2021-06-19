@@ -148,7 +148,9 @@ const App = () => {
         const API = `https://us1.locationiq.com/v1/reverse.php?key=${apiToken}&lat=${latitude}&lon=${longitude}&format=json`;
         const dt = await getApi(API);
         const cityName = dt.address.city;
-        setCurrentCity(cityName);
+        if (cityName) {
+          setCurrentCity(cityName);
+        }
       });
     }
   }, []);
@@ -198,6 +200,7 @@ const App = () => {
         <Form
           showCity={showCity}
           handleChange={handleChange}
+          autocompleteCities={autocompleteCities}
           city={city}
           activeCart={activeCart}
         >

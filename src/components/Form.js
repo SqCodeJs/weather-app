@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Form = ({ children, showCity, handleChange, city, activeCart }) => {
+const Form = ({ children, showCity, autocompleteCities, handleChange, city, activeCart }) => {
   return (
     <FormStyled>
       <InputChildStyled>
@@ -15,7 +15,7 @@ const Form = ({ children, showCity, handleChange, city, activeCart }) => {
         />
       </InputChildStyled>
       <ButtonChildStyled>
-        {city.length > 2 ? (
+        {city.length > 2 && autocompleteCities.length === 0 ? (
           <ButtonStyled
             onClick={() => showCity(city)}
             opacity={activeCart}
