@@ -12,8 +12,12 @@ function titleCase(string) {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
 
-const findCityToRemove = (weatherTab, city) => {
-  const index = weatherTab.findIndex((e) => e.name === city);
+const findCityFromList = (weatherTab, city) => {
+  const tab =[...weatherTab]
+  console.log(tab,city)
+
+  const index = tab.findIndex((e) => e.name === city);
+  
   return index;
 };
 const getLastCities = (LOCAL_STORAGE_KEY) => {
@@ -88,7 +92,7 @@ const getBackgorundBasedOn = (image) => {
 
 export {
   getApi,
-  findCityToRemove,
+  findCityFromList,
   titleCase,
   getLastCities,
   selectedToStorage,

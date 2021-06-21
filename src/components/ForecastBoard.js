@@ -10,8 +10,7 @@ const ForecastBoard = ({
   currentCity,
   error,
   handleCityRemove,
-
-  activeCart,
+activeCart,
   prevCart,
   nextCart,
   isForecastDispled,
@@ -25,7 +24,7 @@ const ForecastBoard = ({
     .map((item, i) => (
       <WrappStyled key={i}>
         <ButtonsStyled>
-          <ButtonPrevStyled onClick={prevCart} disabled={activeCart === 1}>
+          <ButtonPrevStyled onClick={prevCart}  opacity={activeCart}disabled={activeCart === 1}>
             Prev
           </ButtonPrevStyled>
         </ButtonsStyled>
@@ -33,7 +32,7 @@ const ForecastBoard = ({
           <ButtonStyled
             onClick={() => handleCityRemove(item.name)}
             opacity={activeCart}
-            disabled={activeCart === 1}
+           
           >
             Usun
           </ButtonStyled>
@@ -120,7 +119,7 @@ const ButtonStyled = styled.button`
   cursor: pointer;
 `;
 const ButtonPrevStyled = styled(ButtonStyled)`
-  opacity: ${(props) => (props.opacity === 0 ? "0.3" : "1")};
+  opacity: ${(props) => (props.opacity === 1 ? "0.3" : "1")};
 `;
 const ButtonNextStyled = styled(ButtonStyled)`
   opacity: ${(props) => (props.opacity === props.cartslength ? "0.3" : "1")};

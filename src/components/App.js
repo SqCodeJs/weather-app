@@ -4,6 +4,7 @@ import {
   getLastCities,
   selectedToStorage,
   getBackgorundBasedOn,
+  findCityFromList,
 } from "./functions";
 
 import styled from "styled-components";
@@ -81,6 +82,10 @@ const App = () => {
           setCity("");
           setError(false);
           setisForecastDispled(false);
+        }else {
+          const index =findCityFromList(weather,weatherData.name);
+          console.log(index)
+          setActiveCart(index+1);
         }
       } catch (error) {
         console.log(error.message);
@@ -126,12 +131,12 @@ const App = () => {
   };
 
   const handleCityRemove = (city) => {
+    console.log("handl City remo")
     const tempWeather = [...weather];
     const newWeather = tempWeather.filter((e) => e.name !== city);
-
     setWeather(newWeather);
-
     setActiveCart(weather.length - 1);
+
   };
 
   const getPosition = useCallback(() => {
