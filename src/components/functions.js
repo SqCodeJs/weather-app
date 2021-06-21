@@ -24,6 +24,7 @@ const getLastCities = (LOCAL_STORAGE_KEY) => {
   return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 };
 function selectedToStorage(town, currentCity) {
+  if (!currentCity) return false;
   const isTownInLocalStorage = getLastCities("cities").find(
     (el) => el.toLocaleLowerCase() === town.toLocaleLowerCase()
   );
