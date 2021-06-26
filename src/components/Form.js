@@ -10,12 +10,14 @@ const Form = ({ children, showCity, autocompleteCities, handleChange, city, acti
           type="text"
           value={city}
           onChange={handleChange}
-          placeholder="Miasto"
+          placeholder="City"
           borderBottom={city}
         />
       </InputChildStyled>
       <ButtonChildStyled>
-        {city.length > 2 && autocompleteCities.length === 0 ? (
+        {/* {city.length > 2 && autocompleteCities.length === 0 ? */}
+        {city.length > 2?
+         (
           <ButtonStyled
             onClick={() => showCity(city)}
             opacity={activeCart}
@@ -32,12 +34,12 @@ const Form = ({ children, showCity, autocompleteCities, handleChange, city, acti
 const FormStyled = styled.div`
   box-sizing: border-box;
 
-  margin: 0 40px;
+  margin: 0 5%; 
   position: relative;
 
   display: flex;
-  padding: 40px 0;
-  width: 100%;
+  padding: 0;
+  width: 90%;
   /* height: 50px; */
   display: flex;
   justify-content: left;
@@ -49,7 +51,8 @@ const InputChildStyled = styled.div`
 const InputStyled = styled.input`
   box-sizing: border-box;
   padding: 10px 20px;
-  margin: 0 20px;
+  
+  margin: 0;
   flex-grow: 0;
   width: 100%;
   border-radius: ${(props) =>
@@ -70,7 +73,8 @@ const InputStyled = styled.input`
 `;
 const ButtonChildStyled = styled.div`
   box-sizing: border-box;
-  margin: 0 20px;
+   margin: 0 20px;
+  
   padding: 0;
   width: 5%;
   flex-grow: 0;

@@ -29,13 +29,15 @@ activeCart,
           </ButtonPrevStyled>
         </ButtonsStyled>
         <ForecastBoardStyled weather={item}>
+        <ColumnStyled>
           <ButtonStyled
             onClick={() => handleCityRemove(item.name)}
             opacity={activeCart}
            
           >
-            Usun
+            Delate
           </ButtonStyled>
+         <RowStyled>  
           {isForecastDispled ? (
             <CurrentForecast
               timeZone={weather[i].timezone}
@@ -55,12 +57,18 @@ activeCart,
               setMainDispelyOnCurrent={setMainDispelyOnCurrent}
             />
           )}
+          <ChildColumnStyled>
+          <CurrentForecastInfo weather={item} erorr={error} />
           <Forecast
             weather={item}
             erorr={error}
             setMainDispelyOnForecast={setMainDispelyOnForecast}
           />
-          <CurrentForecastInfo weather={item} erorr={error} />
+          </ChildColumnStyled>
+          </RowStyled>
+       
+          </ColumnStyled>
+         
         </ForecastBoardStyled>
         <ButtonsStyled>
           <ButtonNextStyled
@@ -84,11 +92,13 @@ const WrappStyled = styled.div`
   box-sizing: border-box;
   display: flex;
 
-  width: 100%;
+  width: 96%;
   height: 100%;
+
+  
 `;
 const ButtonsStyled = styled.div`
-  width: 5%;
+ width:5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,22 +111,44 @@ const ForecastBoardStyled = styled.div`
   flex-grow: 0;
 
   width: 90%;
+  display:flex;
+  
+`;
+const ColumnStyled =styled.div`
+display:flex;
+flex-direction: column;
+width:100%;
+`;
+const RowStyled=styled.div`
+display:flex;
+width:100%;
+
+`;
+const ChildColumnStyled =styled.div`
+display: flex;
+flex-direction: column;
+width:70%;
 `;
 const ButtonStyled = styled.button`
-  margin: 0;
-  padding: 0;
+  margin: 10px;
+  padding: 5px;
   box-sizing: border-box;
 
-  width: 60px;
+  width: 100px;
   font-size: 16px;
-  font-weight: bold;
-  line-height: 24px;
+  text-align: center;
+
+  line-height: 26px;
   color: rgb(217, 215, 212);
-  border: 2px solid white;
+  border: 2px solid rgba(50, 0, 0, .2);
   border-radius: 25px;
   background-color: transparent;
 
   cursor: pointer;
+  &:hover {
+    background-color:rgba(50, 0, 0, .2);
+    
+  }
 `;
 const ButtonPrevStyled = styled(ButtonStyled)`
   opacity: ${(props) => (props.opacity === 1 ? "0.3" : "1")};

@@ -36,16 +36,26 @@ const CurrentForecast = ({
   );
 };
 const CurrentForecastStyled = styled.div`
-  width: 100%;
+  width: 90%;
+  margin:0 auto;
+  
 
-  margin: 20px auto;
+padding:30px 0;
+box-sizing: border-box;
 
-  color: rgba(255, 255, 255, 1);
-  border-top: 1px solid rgba(255, 255, 255, 0.915);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.915);
+font-family: Trebuchet MS, sans-serif;
+color: rgba(220,240,250,1);
+// background-color:rgba(250, 250, 250, .2);
+// background-color:rgba(0, 0, 0, .2);
+background-color:rgba(255,255,255, .1);
+border-radius: 25px;
+  
+  // border-top: 1px solid rgba(255, 255, 255, 0.915);
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.915);
   cursor: pointer;
 `;
 const NameStyled = styled.h1`
+ 
   font-size: 26px;
   text-align: center;
   padding: 0 5px;
@@ -67,9 +77,10 @@ const WeatherIconStyled = styled.div`
   height: 36px;
 `;
 const ImageIconStyled = styled.img`
+
   display: block;
   margin: 0 auto;
-  width: 60px;
+  width: 30%;
 `;
 CurrentForecast.propTypes = {
   weather: PropTypes.object,

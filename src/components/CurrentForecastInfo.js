@@ -54,12 +54,17 @@ const CurrentForecastInfo = ({ weather }) => {
   );
 };
 const CurrentForecastInfoStyled = styled.div`
-  margin: 0 auto;
-  padding: 0;
+ 
   box-sizing: border-box;
+  margin-left:5%;
+  width:95%;
+  height:300px;
   display: flex;
-
-  width: 90%;
+  border-radius: 25px;
+ 
+  background-color:rgba(50, 0, 0, .2);
+  
+  
 `;
 const ColumnsStyled = styled.div`
   margin: 0;
@@ -71,9 +76,10 @@ const ColumnsStyled = styled.div`
   flex-direction: column;
   /* padding: 5px 0; */
 
-  color: rgba(255, 255, 255, 0.692);
-  /* color:rgb(68, 67, 67); */
-  font-family: sans-serif;
+  font-family: Trebuchet MS, sans-serif;
+  color: rgba(220,240,250,1);
+  letter-spacing: 1px;
+ 
   text-align: center;
 `;
 const RowStyled = styled.div`
@@ -83,7 +89,7 @@ const RowStyled = styled.div`
   display: flex;
 
   width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.915);
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.915);
 `;
 const RowChilderenStyled = styled.div`
   margin: 0;

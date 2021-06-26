@@ -8,12 +8,14 @@ import {
 } from "./functions";
 
 import styled from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 import ForecastBoard from "./ForecastBoard";
 import Form from "./Form";
 import ErrorComponent from "./ErrorComponent";
 import Suggestion from "./Suggestion";
 import Autocomplete from "./Autocomplete";
+import Header from "./Header"
 
 import citiesDatabase from "./list.json";
 
@@ -71,10 +73,7 @@ const App = () => {
         if (weather.every((e) => e.name !== weatherData.name)) {
           setWeather(weather.concat(data));
 
-          // console.log(
-          //   "SELECTED TO STORAGE",
-          //   selectedToStorage(town, currentCity)
-          // );
+
           if (!selectedToStorage(town, currentCity))
             setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);
 
@@ -195,6 +194,8 @@ const App = () => {
   console.log("RENDER", weather);
   return (
     <React.Fragment>
+      <GlobalStyle  />
+
       <Wrapper
         background={
           currentBackround
@@ -202,6 +203,7 @@ const App = () => {
             : "https://images.unsplash.com/photo-1491484925566-336b202157a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
         }
       >
+        <Header/>
         <Form
           showCity={showCity}
           handleChange={handleChange}
@@ -254,24 +256,39 @@ const App = () => {
     </React.Fragment>
   );
 };
+const GlobalStyle = createGlobalStyle`
+  body {
+   margin:0;
+   padding: 0;
+
+   box-sizing: border-box;
+   width: 100%;
+   height:100vh;
+
+  }`;
 const Wrapper = styled.div`
   margin: 0 auto;
   padding: 0;
+  
   box-sizing: border-box;
 
   width: 100%;
   min-width: 1024px;
   height: 100vh;
-  background-image: url(${(props) => props.background});
+  // background-image: url(${(props) => props.background});
+  background-image: linear-gradient(to top, rgb(151, 149, 240) 0%, rgb(200, 200, 212) 100%);
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+  
   background-repeat: no-repeat;
   background-size: 100% 100%;
-
-  /* background: linear-gradient(
-    320deg,
-    rgba(140, 98, 167, 1) 0%,
-    rgba(38, 78, 166, 1) 30%,
-    rgba(0, 212, 255, 1) 90%
-  ); */
+opacity: 0.9;
+  // background: linear-gradient(
+  //   320deg,
+  //   rgba(0, 212, 255, 1) 0%,
+  //   rgba(38, 78, 166, 1)20%,
+  //   rgba(0, 212, 255, 1) 85%
+  // ); 
 
   /* border: 2px solid rgb(216, 215, 215); */
 `;

@@ -22,11 +22,11 @@ const Wrapper = styled.div`
   display: ${(props) => (props.show.length > 3 ? "Block" : "none")};
   position: absolute;
   left: 0;
-  top: 84px;
+  top: 44px;
 
   width: 45%;
   padding: 0 20px 20px 20px;
-  margin: 0 20px;
+  margin:0;
 
   font-size: 18px;
   color: #222;

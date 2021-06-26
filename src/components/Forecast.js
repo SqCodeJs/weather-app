@@ -35,16 +35,23 @@ const Forecast = ({ weather, setMainDispelyOnForecast }) => {
   );
 };
 const ForecastStyled = styled.div`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  width: 100%;
 
-  margin: 0 auto;
-  overflow-x: scroll;
+  
+margin:5% 0 0 5%;
+  width:95%;
+  padding:20px;
+box-sizing: border-box;
+ overflow-x: scroll;
+
+  // background-color:rgba(250, 250, 250, .2);
+  background-color:rgba(50, 0, 0, .2);
+border-radius: 25px;
+letter-spacing: 2px;
+color: rgba(220,240,250,1);
+font-family: Trebuchet MS, sans-serif;
 
   display: flex;
-  justify-content: flex-start;
+   justify-content: start;
   flex-grow: 0;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -53,27 +60,37 @@ const ForecastStyled = styled.div`
 `;
 const ColumnsStyled = styled.div`
   margin: 0;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
-  width: 30%;
+  width: 400px;
   cursor: pointer;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  // border: 2px solid white;
 
-  color: rgba(255, 255, 255, 0.792);
-  font-family: sans-serif;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.915); ;
+ 
+
+
+  // color: rgba(255, 255, 255, 0.792);
+  // font-family: sans-serif;
+  // text-align: center;
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.915); 
+  &:hover{
+     border: 1px solid rgba(255, 255, 255, 0.915); 
+  }
 `;
 const WeatherIconStyled = styled.div`
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
+  padding:20px;
+ 
+  justify-self: center;
 `;
 const HourStyled = styled.p`
+width:60%;
+margin:20px;
   font-size: 16px;
 `;
 const TemperatureStyled = styled(HourStyled)`
