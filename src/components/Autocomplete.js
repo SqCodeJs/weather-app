@@ -2,31 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const Autocomplete = ({ data, city, showCity }) => {
-  return (
-    <Wrapper show={city}>
-      <ListUlStyled>
-        {city
-          ? data.map((e, i) => (
-              <LiStyled key={i} onClick={() => showCity(e)}>
-                {e}
-              </LiStyled>
-            ))
-          : ""}
-      </ListUlStyled>
-    </Wrapper>
-  );
-};
 const Wrapper = styled.div`
   box-sizing: border-box;
-  display: ${(props) => (props.show.length > 3 ? "Block" : "none")};
+  display: ${(props) => (props.show.length > 2 ? "Block" : "none")};
   position: absolute;
   left: 0;
   top: 44px;
 
   width: 45%;
   padding: 0 20px 20px 20px;
-  margin:0;
+  margin: 0;
 
   font-size: 18px;
   color: #222;
@@ -56,6 +41,22 @@ const LiStyled = styled.li`
     color: gray;
   }
 `;
+
+const Autocomplete = ({ data, city, showCity }) => {
+  return (
+    <Wrapper show={city}>
+      <ListUlStyled>
+        {city
+          ? data.map((e, i) => (
+              <LiStyled key={i} onClick={() => showCity(e)}>
+                {e}
+              </LiStyled>
+            ))
+          : ""}
+      </ListUlStyled>
+    </Wrapper>
+  );
+};
 
 Autocomplete.propTypes = {
   data: PropTypes.array,

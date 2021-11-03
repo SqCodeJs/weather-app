@@ -1,46 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
-const Form = ({ children, showCity, autocompleteCities, handleChange, city, activeCart }) => {
-  return (
-    <FormStyled>
-      <InputChildStyled>
-        <InputStyled
-          type="text"
-          value={city}
-          onChange={handleChange}
-          placeholder="City"
-          borderBottom={city}
-        />
-      </InputChildStyled>
-      <ButtonChildStyled>
-        {/* {city.length > 2 && autocompleteCities.length === 0 ? */}
-        {city.length > 2?
-         (
-          <ButtonStyled
-            onClick={() => showCity(city)}
-            opacity={activeCart}
-            disabled={activeCart === 10 ? true : false}
-          >
-            +
-          </ButtonStyled>
-        ) : null}
-      </ButtonChildStyled>
-      {children}
-    </FormStyled>
-  );
-};
 const FormStyled = styled.div`
   box-sizing: border-box;
-
-  margin: 0 5%; 
+  margin: 0 5%;
   position: relative;
-
   display: flex;
   padding: 0;
   width: 90%;
-  /* height: 50px; */
   display: flex;
   justify-content: left;
 `;
@@ -51,12 +18,12 @@ const InputChildStyled = styled.div`
 const InputStyled = styled.input`
   box-sizing: border-box;
   padding: 10px 20px;
-  
+
   margin: 0;
   flex-grow: 0;
   width: 100%;
   border-radius: ${(props) =>
-    props.borderBottom.length > 3 ? " 10px 10px 0 0" : "10px"};
+    props.borderBottom.length > 2 ? " 10px 10px 0 0" : "10px"};
 
   border: none;
   box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
@@ -73,8 +40,8 @@ const InputStyled = styled.input`
 `;
 const ButtonChildStyled = styled.div`
   box-sizing: border-box;
-   margin: 0 20px;
-  
+  margin: 0 20px;
+
   padding: 0;
   width: 5%;
   flex-grow: 0;
@@ -102,6 +69,35 @@ const ButtonStyled = styled.button`
 
   font-family: arial, sans-serif;
 `;
+
+const Form = ({ children, showCity, handleChange, city, activeCart }) => {
+  return (
+    <FormStyled>
+      <InputChildStyled>
+        <InputStyled
+          type="text"
+          value={city}
+          onChange={handleChange}
+          placeholder="city"
+          borderBottom={city}
+        />
+      </InputChildStyled>
+      <ButtonChildStyled>
+        {city.length > 2 ? (
+          <ButtonStyled
+            onClick={() => showCity(city)}
+            opacity={activeCart}
+            disabled={activeCart === 10 ? true : false}
+          >
+            +
+          </ButtonStyled>
+        ) : null}
+      </ButtonChildStyled>
+      {children}
+    </FormStyled>
+  );
+};
+
 Form.propTypes = {
   showCity: PropTypes.func,
   handleChange: PropTypes.func,
