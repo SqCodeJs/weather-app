@@ -195,7 +195,9 @@ const App = () => {
   return (
     <React.Fragment>
       <GlobalStyle  />
-
+      <pre>
+        {autocompleteCities}
+      </pre>
       <Wrapper
         background={
           currentBackround
