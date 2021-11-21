@@ -1,6 +1,6 @@
 import React from "react";
 
-import { titleCase } from "./functions";
+import { titleCase } from "../functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -13,19 +13,20 @@ const Suggestion = ({ localData, showCity, activeCart, displayToggle }) => {
   return (
     <ContainerStyled>
       <ClosedButtonStyled onClick={displayToggle}>x</ClosedButtonStyled>
-      <TitleStyled>Ostatnio wyszukiwane miejsca: </TitleStyled>
+      <TitleStyled>Recently searched places </TitleStyled>
       <div>{list}</div>
     </ContainerStyled>
   );
 };
 const TitleStyled = styled.h1`
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
-  font-family: Helvetica, sans-serif;
+  font-family: Trebuchet MS, sans-serif;
+  color: rgba(220, 240, 250, 1);
+  letter-spacing: 2px;
   text-align: center;
 `;
 const ContainerStyled = styled.div`
-  min-width: 200px;
+  min-width: 300px;
   height: 80px;
   padding: 5px;
   position: fixed;
@@ -34,12 +35,18 @@ const ContainerStyled = styled.div`
   justify-content: center;
   align-items: center;
 
-  right: 200px;
+  right: 180px;
   top: 60px;
-  opacity: 0.9;
-  background-color: black;
-  border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 5px;
+  font-family: Trebuchet MS, sans-serif;
+  color: rgba(220, 240, 250, 1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 0px 17px 8px rgba(50, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.111);
+  }
 `;
 const ClosedButtonStyled = styled.button`
   position: absolute;
@@ -49,16 +56,24 @@ const ClosedButtonStyled = styled.button`
   right: -10px;
   top: -10px;
   margin: 0 auto;
+
   text-align: center;
+
   line-height: 18px;
-  font-size: 10px;
-  color: white;
-  border: 1px solid white;
-  background-color: black;
-  border-radius: 50%;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: none;
+  background-color: rgba(200, 200, 200, 0.5);
+  border-radius: 20px;
   opacity: 0.5;
+  transition: 0.3s;
   &:hover {
     opacity: 1;
+    color: rgba(255, 255, 255, 1);
+    right: -15px;
+    top: -15px;
   }
   cursor: pointer;
 
@@ -69,31 +84,23 @@ const ClosedButtonStyled = styled.button`
 
 const SuggestionButton = styled.button`
   margin: 10px;
-
+  padding: 5px 10px;
   font-size: 16px;
   text-align: center;
   line-height: 18px;
 
-  color: white;
-  border: 1px solid white;
-  background-color: black;
-  border-radius: 10%;
+  font-family: Trebuchet MS, sans-serif;
+  color: rgba(220, 240, 250, 1);
+  border: none;
+  letter-spacing: 2px;
+  /* border: 1px solid rgba(255, 255, 255, 0.7); */
+  background-color: rgba(200, 200, 200, 0.3);
+  border-radius: 20px;
   opacity: 0.7;
   &:hover {
     opacity: 1;
   }
   cursor: pointer;
-  /* width: 80px;
-  height: 40px;
-
-  border: 2px solid white;
-  border-radius: 25px;
-  background-color: transparent;
-  opacity: ${(props) => (props.opacity === 4 ? "0.3" : "")};
-  cursor: pointer;
-  padding: 0;
-  font-size: 20px;
-  line-height: 34px; */
 `;
 Suggestion.propTypes = {
   localData: PropTypes.array,

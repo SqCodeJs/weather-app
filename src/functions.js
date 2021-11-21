@@ -13,11 +13,10 @@ function titleCase(string) {
 }
 
 const findCityFromList = (weatherTab, city) => {
-  const tab =[...weatherTab]
-  console.log(tab,city)
+  const tab = [...weatherTab];
 
   const index = tab.findIndex((e) => e.name === city);
-  
+
   return index;
 };
 const getLastCities = (LOCAL_STORAGE_KEY) => {
