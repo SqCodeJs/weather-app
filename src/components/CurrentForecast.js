@@ -1,15 +1,15 @@
-
 import React from "react";
 import { getIconBasedOn } from "../functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 const CurrentForecastStyled = styled.div`
+  box-sizing: border-box;
   width: 90%;
-  margin: 0 auto;
-  padding: 20px 0;
+  margin: 2% auto;
+
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
   font-family: Trebuchet MS, sans-serif;
@@ -39,13 +39,10 @@ const DescriptionSTyled = styled(NameStyled)`
 `;
 const TemperatureStyled = styled(NameStyled)``;
 const WeatherIconStyled = styled.div`
-  width: 100%;
-  height: 36px;
+  width: 30%;
 `;
 const ImageIconStyled = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 30%;
+  width: 100%;
 `;
 
 const CurrentForecast = ({
@@ -96,4 +93,3 @@ CurrentForecast.propTypes = {
   isForecastDispled: PropTypes.bool,
 };
 export default CurrentForecast;
-

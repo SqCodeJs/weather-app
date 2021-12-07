@@ -4,6 +4,7 @@ import CurrentForecastInfo from "./CurrentForecastInfo";
 import Forecast from "./Forecast";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { device } from "../device";
 
 const WrappStyled = styled.div`
   margin: 0;
@@ -11,14 +12,14 @@ const WrappStyled = styled.div`
   box-sizing: border-box;
   display: flex;
 
-  width: 96%;
+  width: 100%;
   height: 100%;
 `;
 const ButtonsStyled = styled.div`
-  width: 5%;
+  width: 15%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 `;
 const ForecastBoardStyled = styled.div`
   margin: 0;
@@ -27,48 +28,90 @@ const ForecastBoardStyled = styled.div`
 
   flex-grow: 0;
 
-  width: 90%;
+  width: 70%;
   display: flex;
+  box-sizing: border-box;
 `;
 const ColumnStyled = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
   width: 100%;
 `;
 const RowStyled = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: column;
+
+  @media ${device.laptop} {
+    flex-direction: row;
+  }
 `;
 const ChildColumnStyled = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+
+  width: 100%;
+
+  @media ${device.mobileM} {
+    font-size: 14px;
+  }
+  @media ${device.tablet} {
+  }
+  @media ${device.laptop} {
+    width: 70%;
+  }
+  @media ${device.laptopL} {
+  }
 `;
 const ButtonStyled = styled.button`
-  margin: 10px;
-  padding: 5px;
-  box-sizing: border-box;
+  margin: 0 2% 2%;
 
-  width: 100px;
-  font-size: 16px;
+  box-sizing: border-box;
+  justify-self: flex-end;
+  align-self: flex-end;
+
   text-align: center;
 
-  line-height: 26px;
   color: rgb(217, 215, 212);
-  border: 2px solid rgba(50, 0, 0, 0.2);
+  border: 1px solid rgba(50, 0, 0, 0.2);
   border-radius: 25px;
   background-color: transparent;
-
+  font-size: 8px;
   cursor: pointer;
   &:hover {
     background-color: rgba(50, 0, 0, 0.2);
   }
+  @media ${device.mobileM} {
+    font-size: 12px;
+  }
+  @media ${device.tablet} {
+    padding: 1% 1%;
+    font-size: 18px;
+  }
+  @media ${device.laptop} {
+    font-size: 20px;
+  }
+  @media ${device.laptopL} {
+    width: 120px;
+    font-size: 20px;
+  }
 `;
 const ButtonPrevStyled = styled(ButtonStyled)`
+  margin: 0;
+  width: 80%;
   opacity: ${(props) => (props.opacity === 1 ? "0.3" : "1")};
+  justify-self: center;
+  align-self: center;
 `;
 const ButtonNextStyled = styled(ButtonStyled)`
+  margin: 0;
+  width: 80%;
   opacity: ${(props) => (props.opacity === props.cartslength ? "0.3" : "1")};
+  justify-self: center;
+  align-self: center;
 `;
 
 const ForecastBoard = ({
@@ -100,12 +143,6 @@ const ForecastBoard = ({
         </ButtonsStyled>
         <ForecastBoardStyled weather={item}>
           <ColumnStyled>
-            <ButtonStyled
-              onClick={() => handleCityRemove(item.name)}
-              opacity={activeCart}
-            >
-              Delate
-            </ButtonStyled>
             <RowStyled>
               {isForecastDispled ? (
                 <CurrentForecast
@@ -137,6 +174,12 @@ const ForecastBoard = ({
                 />
               </ChildColumnStyled>
             </RowStyled>
+            <ButtonStyled
+              onClick={() => handleCityRemove(item.name)}
+              opacity={activeCart}
+            >
+              Delate
+            </ButtonStyled>
           </ColumnStyled>
         </ForecastBoardStyled>
         <ButtonsStyled>

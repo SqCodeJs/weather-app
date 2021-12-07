@@ -24,16 +24,16 @@ const GlobalStyle = createGlobalStyle`
 
    box-sizing: border-box;
    width: 100%;
-   height:100vh;
+  
 
   }`;
 const Wrapper = styled.div`
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
   width: 100%;
-  min-width: 1024px;
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   opacity: 1;
@@ -109,7 +109,7 @@ const App = () => {
   async function showCity(town) {
     if (town) {
       try {
-        const data = await getWeatherData(town); 
+        const data = await getWeatherData(town);
         if (weather.every((e) => e.name !== data.name)) {
           if (!selectedToStorage(town, currentCity))
             setLocalData((prev) => [town.toLocaleLowerCase(), ...prev]);

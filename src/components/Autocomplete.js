@@ -7,9 +7,9 @@ const Wrapper = styled.div`
   display: ${(props) => (props.show.length > 2 ? "Block" : "none")};
   position: absolute;
   left: 0;
-  top: 44px;
+  top: 42px;
 
-  width: 45%;
+  width: 100%;
   padding: 0 20px 20px 20px;
   margin: 0;
 
@@ -47,11 +47,13 @@ const Autocomplete = ({ data, city, showCity }) => {
     <Wrapper show={city}>
       <ListUlStyled>
         {city
-          ? data.map((e, i) => (
-              <LiStyled key={i} onClick={() => showCity(e)}>
-                {e}
-              </LiStyled>
-            ))
+          ? data
+              .filter((e, i) => i < 15)
+              .map((e, i) => (
+                <LiStyled key={i} onClick={() => showCity(e)}>
+                  {e}
+                </LiStyled>
+              ))
           : ""}
       </ListUlStyled>
     </Wrapper>

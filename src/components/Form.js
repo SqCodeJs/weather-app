@@ -3,22 +3,22 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 const FormStyled = styled.div`
   box-sizing: border-box;
-  margin: 0 5%;
-  position: relative;
+
+  width: 60%;
+  margin: 0 auto;
   display: flex;
-  padding: 0;
-  width: 90%;
-  display: flex;
-  justify-content: left;
+  justify-content: center;
 `;
 const InputChildStyled = styled.div`
-  width: 45%;
+  position: relative;
+  margin: 2% auto;
+  width: 80%;
 `;
 
 const InputStyled = styled.input`
   box-sizing: border-box;
-  padding: 10px 20px;
-
+  padding: 1%;
+  padding-left: 20px;
   margin: 0;
   flex-grow: 0;
   width: 100%;
@@ -28,9 +28,9 @@ const InputStyled = styled.input`
   border: none;
   box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
 
-  font-size: 18px;
+  font-size: 20px;
   color: #222;
-  line-height: 24px;
+  line-height: 26px;
   font-family: arial, sans-serif;
   background-color: rgba(255, 255, 255, 1);
 
@@ -40,8 +40,11 @@ const InputStyled = styled.input`
 `;
 const ButtonChildStyled = styled.div`
   box-sizing: border-box;
-  margin: 0 20px;
-
+  /* margin: 0 20px; */
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
   padding: 0;
   width: 5%;
   flex-grow: 0;
@@ -54,26 +57,34 @@ const ButtonStyled = styled.button`
   padding: 0;
   margin: 0;
 
-  width: 50%;
-
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-grow: 0;
-  border: 2px solid white;
-  border-radius: 25px;
-  background-color: transparent;
+  border: none;
+
+  border-radius: 50%;
+  background-color: #3c638a;
 
   opacity: ${(props) => (props.opacity === 4 ? "0.3" : "1")};
   cursor: ${(props) => (props.opacity === 4 ? "" : "pointer")};
   font-size: 22px;
-  line-height: 32px;
-  color: #222;
+
+  color: white;
 
   font-family: arial, sans-serif;
+  &:hover {
+    box-shadow: 0px 0px 4px 4px rgba(100, 100, 100, 1);
+  }
 `;
 
 const Form = ({ children, showCity, handleChange, city, activeCart }) => {
   return (
     <FormStyled>
       <InputChildStyled>
+        {children}
         <InputStyled
           type="text"
           value={city}
@@ -81,19 +92,18 @@ const Form = ({ children, showCity, handleChange, city, activeCart }) => {
           placeholder="city"
           borderBottom={city}
         />
+        <ButtonChildStyled>
+          {city.length > 2 ? (
+            <ButtonStyled
+              onClick={() => showCity(city)}
+              opacity={activeCart}
+              disabled={activeCart === 10 ? true : false}
+            >
+              +
+            </ButtonStyled>
+          ) : null}
+        </ButtonChildStyled>
       </InputChildStyled>
-      <ButtonChildStyled>
-        {city.length > 2 ? (
-          <ButtonStyled
-            onClick={() => showCity(city)}
-            opacity={activeCart}
-            disabled={activeCart === 10 ? true : false}
-          >
-            +
-          </ButtonStyled>
-        ) : null}
-      </ButtonChildStyled>
-      {children}
     </FormStyled>
   );
 };

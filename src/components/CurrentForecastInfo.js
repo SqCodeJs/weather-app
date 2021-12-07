@@ -1,4 +1,3 @@
-
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -12,10 +11,11 @@ import {
   faSortAmountDown,
   faThermometerHalf,
 } from "@fortawesome/free-solid-svg-icons";
+import { device } from "../device";
 const CurrentForecastInfoStyled = styled.div`
   box-sizing: border-box;
-  margin-left: 5%;
-  width: 95%;
+  margin: 3%;
+  width: 94%;
   height: 160px;
   display: flex;
   justify-content: center;
@@ -48,13 +48,25 @@ const RowChilderenStyled = styled.div`
   justify-content: center;
 `;
 const ParagrafStyled = styled.p`
-  padding: 0 5px;
-  font-size: 16px;
-  line-height: 28px;
+  padding: 0 1%;
   color: rgba(220, 240, 250, 1);
   letter-spacing: 1px;
-
+  font-size: 10px;
+  line-height: 22px;
   transform: rotate(${(props) => props.direction}deg);
+
+  @media ${device.tablet} {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  @media ${device.laptop} {
+    font-size: 14px;
+    line-height: 26px;
+  }
+  @media ${device.laptopL} {
+    font-size: 16px;
+    line-height: 28px;
+  }
 `;
 
 const CurrentForecastInfo = ({ weather }) => {
@@ -131,4 +143,3 @@ CurrentForecastInfo.propTypes = {
   weather: PropTypes.object,
 };
 export default CurrentForecastInfo;
-

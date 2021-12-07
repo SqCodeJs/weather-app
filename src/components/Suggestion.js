@@ -3,6 +3,7 @@ import React from "react";
 import { titleCase } from "../functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { device } from "../device";
 
 const Suggestion = ({ localData, showCity, activeCart, displayToggle }) => {
   const list = localData.map((item, i) => (
@@ -14,38 +15,71 @@ const Suggestion = ({ localData, showCity, activeCart, displayToggle }) => {
     <ContainerStyled>
       <ClosedButtonStyled onClick={displayToggle}>x</ClosedButtonStyled>
       <TitleStyled>Recently searched places </TitleStyled>
-      <div>{list}</div>
+      <Wrapp> {list} </Wrapp>
     </ContainerStyled>
   );
 };
+const Wrapp = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TitleStyled = styled.h1`
-  font-size: 18px;
+  padding: 1%;
+  font-size: 10px;
   font-family: Trebuchet MS, sans-serif;
   color: rgba(220, 240, 250, 1);
   letter-spacing: 2px;
   text-align: center;
+  @media ${device.mobileM} {
+    font-size: 12px;
+  }
+  @media ${device.tablet} {
+    font-size: 14px;
+  }
+  @media ${device.laptop} {
+    font-size: 16px;
+  }
+  @media ${device.laptopL} {
+    font-size: 18px;
+  }
 `;
 const ContainerStyled = styled.div`
-  min-width: 300px;
+  width: 300px;
   height: 80px;
-  padding: 5px;
+  padding: 1%;
   position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  right: 180px;
-  top: 60px;
-  border-radius: 5px;
+  right: 10%;
+  top: 5%;
+
   font-family: Trebuchet MS, sans-serif;
   color: rgba(220, 240, 250, 1);
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(140, 140, 140, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 3px 2px 17px 8px rgba(50, 0, 0, 0);
   border-radius: 10px;
   cursor: pointer;
   &:hover {
-    box-shadow: 0px 0px 17px 8px rgba(50, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.111);
+  }
+  @media ${device.mobileM} {
+    font-size: 14px;
+  }
+  @media ${device.tablet} {
+    font-size: 16px;
+  }
+  @media ${device.laptop} {
+    width: 300px;
+    height: 80px;
+    padding: 2%;
+  }
+  @media ${device.laptopL} {
   }
 `;
 const ClosedButtonStyled = styled.button`
@@ -83,24 +117,37 @@ const ClosedButtonStyled = styled.button`
 `;
 
 const SuggestionButton = styled.button`
-  margin: 10px;
-  padding: 5px 10px;
-  font-size: 16px;
   text-align: center;
-  line-height: 18px;
-
+  padding: 2% 4%;
+  margin: 2%;
   font-family: Trebuchet MS, sans-serif;
   color: rgba(220, 240, 250, 1);
   border: none;
   letter-spacing: 2px;
-  /* border: 1px solid rgba(255, 255, 255, 0.7); */
-  background-color: rgba(200, 200, 200, 0.3);
+
+  background-color: rgba(50, 50, 50, 0.7);
   border-radius: 20px;
   opacity: 0.7;
   &:hover {
     opacity: 1;
   }
   cursor: pointer;
+  @media ${device.mobileM} {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  @media ${device.tablet} {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  @media ${device.laptop} {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  @media ${device.laptopL} {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 Suggestion.propTypes = {
   localData: PropTypes.array,

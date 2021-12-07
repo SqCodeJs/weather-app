@@ -1,13 +1,12 @@
-
 import React from "react";
 import { getIconBasedOn } from "../functions";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import { device } from "../device";
 const ForecastStyled = styled.div`
-  margin: 2% 0 0 5%;
-  width: 95%;
-  padding: 20px;
+  margin: 3%;
+  width: 94%;
+  padding: 5%;
   box-sizing: border-box;
   overflow-x: scroll;
   background-color: rgba(50, 0, 0, 0.2);
@@ -51,11 +50,21 @@ const WeatherIconStyled = styled.div`
 const HourStyled = styled.p`
   width: 60%;
   margin: 20px;
-  font-size: 16px;
+
+  @media ${device.tablet} {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  @media ${device.laptop} {
+    font-size: 14px;
+    line-height: 26px;
+  }
+  @media ${device.laptopL} {
+    font-size: 16px;
+    line-height: 28px;
+  }
 `;
-const TemperatureStyled = styled(HourStyled)`
-  font-size: 16px;
-`;
+const TemperatureStyled = styled(HourStyled)``;
 const SpanStyled = styled.span`
   font-size: 16px;
 
@@ -63,28 +72,28 @@ const SpanStyled = styled.span`
 `;
 const Forecast = ({ weather, setMainDispelyOnForecast }) => {
   const timeZone = weather.timezone;
-  const getDayName = (day, d) => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+  //   const getDayName = (day, d) => {
+  //     const days = [
+  //       "Sunday",
+  //       "Monday",
+  //       "Tuesday",
+  //       "Wednesday",
+  //       "Thursday",
+  //       "Friday",
+  //       "Saturday",
+  //     ];
 
-    const i = new Date(day).getDay();
-    if (i === d) return null;
-    if (d === undefined) return days[0];
+  //     const i = new Date(day).getDay();
+  //     if (i === d) return null;
+  //     if (d === undefined) return days[0];
 
-    return days[i];
-  };
-  const w = weather.forecast.map((e) => new Date(e.dt_txt).getDay());
+  //     return days[i];
+  //   };
+  //   const w = weather.forecast.map((e) => new Date(e.dt_txt).getDay());
 
   const hurlyForecast = weather.forecast.map((item, i) => (
     <ColumnsStyled key={i} onClick={() => setMainDispelyOnForecast(i)}>
-      <div>{getDayName(item.dt_txt, w[i + 1])}</div>
+      {/* <div>{getDayName(item.dt_txt, w[i + 1])}</div> */}
       <HourStyled>
         {new Date((item.dt + timeZone) * 1000).toLocaleTimeString("en-GB", {
           hour: "numeric",
@@ -111,4 +120,3 @@ Forecast.protoTypes = {
   setMainDispelyOnForecast: PropTypes.func,
 };
 export default Forecast;
-
