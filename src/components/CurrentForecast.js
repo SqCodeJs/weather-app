@@ -77,7 +77,7 @@ const CurrentForecast = ({
       <WeatherIconStyled>
         <ImageIconStyled
           src={getIconBasedOn(weather.weather[0].icon)}
-          alt="ok"
+          alt="icon"
         />
       </WeatherIconStyled>
     </CurrentForecastStyled>
