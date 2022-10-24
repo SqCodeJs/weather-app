@@ -7,28 +7,13 @@ import PropTypes from "prop-types";
 import { device } from "../device";
 
 const WrappStyled = styled.div`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  flex-grow:1
   display: flex;
-
-  width: 100%;
-  height: 100%;
-`;
-const ButtonsStyled = styled.div`
-  width: 15%;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
+  overflow-y: scroll;
+  border: 2px solid black;
 `;
 const ForecastBoardStyled = styled.div`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  flex-grow: 0;
-
-  width: 70%;
+  width: 100%;
   display: flex;
   box-sizing: border-box;
 `;
@@ -99,48 +84,21 @@ const ButtonStyled = styled.button`
     font-size: 20px;
   }
 `;
-const ButtonPrevStyled = styled(ButtonStyled)`
-  margin: 0;
-  width: 80%;
-  opacity: ${(props) => (props.opacity === 1 ? "0.3" : "1")};
-  justify-self: center;
-  align-self: center;
-`;
-const ButtonNextStyled = styled(ButtonStyled)`
-  margin: 0;
-  width: 80%;
-  opacity: ${(props) => (props.opacity === props.cartslength ? "0.3" : "1")};
-  justify-self: center;
-  align-self: center;
-`;
-
 const ForecastBoard = ({
   weather,
   currentCity,
   error,
   handleCityRemove,
   activeCart,
-  prevCart,
-  nextCart,
   isForecastDispled,
   setMainDispelyOnForecast,
   setMainDispelyOnCurrent,
   forecastIndex,
 }) => {
-  const cartslength = weather.length;
-
   const forecastBoard = weather
+    .filter((e, i) => i === activeCart)
     .map((item, i) => (
       <WrappStyled key={i}>
-        <ButtonsStyled>
-          <ButtonPrevStyled
-            onClick={prevCart}
-            opacity={activeCart}
-            disabled={activeCart === 1}
-          >
-            Prev
-          </ButtonPrevStyled>
-        </ButtonsStyled>
         <ForecastBoardStyled weather={item}>
           <ColumnStyled>
             <RowStyled>
@@ -182,19 +140,8 @@ const ForecastBoard = ({
             </ButtonStyled>
           </ColumnStyled>
         </ForecastBoardStyled>
-        <ButtonsStyled>
-          <ButtonNextStyled
-            onClick={nextCart}
-            disabled={activeCart === weather.length}
-            opacity={activeCart}
-            cartslength={cartslength}
-          >
-            Next
-          </ButtonNextStyled>
-        </ButtonsStyled>
       </WrappStyled>
-    ))
-    .filter((e, i) => i === activeCart - 1);
+    ));
 
   return <>{forecastBoard}</>;
 };

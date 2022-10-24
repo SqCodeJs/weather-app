@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 const FormStyled = styled.div`
-  box-sizing: border-box;
-
   width: 60%;
   margin: 0 auto;
   display: flex;

@@ -15,25 +15,24 @@ import ErrorComponent from "./ErrorComponent";
 import Suggestion from "./Suggestion";
 import Autocomplete from "./Autocomplete";
 import Header from "./Header";
+import Navigation from "./Navigation";
 import citiesDatabase from "./list.json";
 
 const GlobalStyle = createGlobalStyle`
-  body {
-   margin:0;
-   padding: 0;
-
+*{
+	margin:0;
+	padding: 0;
    box-sizing: border-box;
-   width: 100%;
-  
-
-  }`;
+}`;
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  /* height: -webkit-fill-available; */
+  height: ${(props) => props.height};
   display: flex;
+  border: 1px solid red;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+
   background-repeat: no-repeat;
   background-size: 100% 100%;
   opacity: 1;
@@ -97,7 +96,7 @@ const App = () => {
   }
   const handleStateBasedOnTown = (currentWeather) => {
     setWeather(weather.concat(currentWeather));
-    setActiveCart(weather.length + 1);
+    setActiveCart(weather.length);
     setCity("");
     setError(false);
     setisForecastDispled(false);
@@ -116,7 +115,7 @@ const App = () => {
           handleStateBasedOnTown(data);
         } else {
           const index = findCityFromList(weather, data.name);
-          setActiveCart(index + 1);
+          //   setActiveCart(index + 1);
           setCity("");
         }
       } catch (error) {
@@ -194,18 +193,12 @@ const App = () => {
     sendLastSeen();
   }, [sendLastSeen]);
 
-  useEffect(() => {
-    if (weather.length > 0) {
-      setCurrentBackround(weather[activeCart - 1].backgroundImage);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCart]);
-
   return (
     <React.Fragment>
       <GlobalStyle />
 
       <Wrapper
+        height={window.innerHeight + "px"}
         background={
           currentBackround
             ? currentBackround
@@ -249,18 +242,25 @@ const App = () => {
         {weather.length ? (
           <ForecastBoard
             weather={weather}
+            activeCart={activeCart}
             currentCity={currentCity}
             error={error}
             handleCityRemove={handleCityRemove}
-            activeCart={activeCart}
-            nextCart={nextCart}
-            prevCart={prevCart}
             isForecastDispled={isForecastDispled}
             setMainDispelyOnForecast={setMainDispelyOnForecast}
             setMainDispelyOnCurrent={setMainDispelyOnCurrent}
             forecastIndex={forecastIndex}
           />
-        ) : null}
+        ) : (
+          <div style={{ flexGrow: 1 }}></div>
+        )}
+        <Navigation
+          weather={weather}
+          activeCart={activeCart}
+          nextCart={nextCart}
+          prevCart={prevCart}
+          setActiveCart={setActiveCart}
+        />
       </Wrapper>
     </React.Fragment>
   );
